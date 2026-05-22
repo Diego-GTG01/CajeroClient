@@ -1,8 +1,8 @@
-export interface Result {
+export interface Result<T> {
     correct: boolean;
     message: string;
-    object: any;
-    objects: any[];
+    object: T;
+    objects: T[];
     ex: Error;
 
 }
