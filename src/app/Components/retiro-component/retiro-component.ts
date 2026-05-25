@@ -8,7 +8,7 @@ import { Transaccion } from '../../Interfaces/transaccion';
 
 export interface DatosCliente {
   nombre: string;
-  rango: string;   
+  rango: string;
   saldo: number;
   numTarjeta: string;
 }
@@ -39,8 +39,8 @@ export class RetiroComponent implements OnInit {
 
   constructor(
     private retiroService: RetiroService,
-    private usuarioService: UsuarioService
-  ) { }
+    private usuarioService: UsuarioService,
+  ) {}
 
   ngOnInit(): void {
     this.cargarDatosCliente();
@@ -63,11 +63,17 @@ export class RetiroComponent implements OnInit {
     });
   }
 
+  redondearMonto(): void {
+    if (this.monto !== null && this.monto > 0) {
+      this.monto = Math.round(this.monto * 2) / 2;
+    }
+  }
+
   get montoValido(): boolean {
     return (
       this.monto !== null &&
       this.monto > 0 &&
-      this.monto % 1 === 0 &&
+      (this.monto * 2) % 1 === 0 &&
       this.monto <= this.cliente.saldo
     );
   }
@@ -87,9 +93,9 @@ export class RetiroComponent implements OnInit {
     const transaccion: Transaccion = {
       tarjeta: {
         idTarjeta: 0,
-        NumTarjeta: this.cliente.numTarjeta
+        NumTarjeta: this.cliente.numTarjeta,
       },
-      cajero: { idCajero: this.idCajero },
+      cajero: { idCajero: this.idCajero, total: 0 },
       monto: this.monto!,
     };
 

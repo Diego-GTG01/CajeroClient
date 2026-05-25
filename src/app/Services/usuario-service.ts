@@ -9,7 +9,7 @@ import { DatosCliente } from '../Components/retiro-component/retiro-component';
   providedIn: 'root',
 })
 export class UsuarioService {
-  private url = 'http://localhost:8080/usuario';
+  private url = 'http://192.167.0.114:8080/usuario';
   private http = inject(HttpClient);
 
  

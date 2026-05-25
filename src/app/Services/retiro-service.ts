@@ -11,7 +11,7 @@ import { Retiro } from '../Interfaces/retiro';
 })
 export class RetiroService {
 
-  url = "http://localhost:8080/";
+  url = "http://192.167.0.114:8080/";
   private http = inject(HttpClient);
 
   transact(transaccion: Transaccion): Observable<Result<Retiro>>{
