@@ -5,6 +5,7 @@ import { RetiroService } from '../../Services/retiro-service';
 import { UsuarioService } from '../../Services/usuario-service';
 import { Retiro } from '../../Interfaces/retiro';
 import { Transaccion } from '../../Interfaces/transaccion';
+import { Router } from '@angular/router';
 
 export interface DatosCliente {
   nombre: string;
@@ -15,7 +16,7 @@ export interface DatosCliente {
 
 type EstadoRetiro = 'cargando' | 'formulario' | 'procesando' | 'exito' | 'error';
 
-const NUM_TARJETA_DEMO = '1234567812345678';
+const NUM_TARJETA_DEMO = '12345678123456781234';
 
 @Component({
   selector: 'app-retiro-component',
@@ -25,9 +26,9 @@ const NUM_TARJETA_DEMO = '1234567812345678';
   styleUrl: './retiro-component.css',
 })
 export class RetiroComponent implements OnInit {
-  numTarjeta: string = NUM_TARJETA_DEMO;
+  numTarjeta: string = '';
   idTarjeta: number = 0;
-  idCajero: number = 3;
+  idCajero: number = 0;
 
   estado: EstadoRetiro = 'cargando';
   cliente: DatosCliente = { nombre: '', rango: '', saldo: 0, numTarjeta: '' };
@@ -36,20 +37,35 @@ export class RetiroComponent implements OnInit {
   monto: number | null = null;
   mensajeError = '';
   resultados: Retiro[] = [];
+  tokenGuardado: string = '';
 
   constructor(
     private retiroService: RetiroService,
     private usuarioService: UsuarioService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.cargarDatosCliente();
+    this.tokenGuardado = localStorage.getItem('token') || '';
+    this.numTarjeta = localStorage.getItem('numTarjeta') || '';
+    this.idCajero = parseInt(localStorage.getItem('idCajero') || '') || 0;
+    localStorage.clear();
+    if (this.tokenGuardado && this.numTarjeta && this.idCajero) {
+      console.log('Token recuperado:', this.tokenGuardado);
+      console.log('Num:', this.tokenGuardado);
+      console.log('cajero:', this.tokenGuardado);
+      
+      this.cargarDatosCliente();
+    } else {
+      console.warn('Usuario no autenticado. Redirigiendo al login...');
+      this.router.navigate(['/login']);
+    }
   }
 
   private cargarDatosCliente(): void {
     this.estado = 'cargando';
 
-    this.usuarioService.getDatosClientePorTarjeta(this.numTarjeta).subscribe({
+    this.usuarioService.getDatosClientePorTarjeta(this.numTarjeta, this.tokenGuardado).subscribe({
       next: (datos) => {
         this.cliente = datos;
         this.idTarjeta = datos.numTarjeta ? parseInt(datos.numTarjeta) : 0;
@@ -101,7 +117,7 @@ export class RetiroComponent implements OnInit {
 
     this.estado = 'procesando';
     console.log('Enviando transacción:', transaccion);
-    this.retiroService.transact(transaccion).subscribe({
+    this.retiroService.transact(transaccion, this.tokenGuardado).subscribe({
       next: (result) => {
         if (result.correct) {
           this.resultados = result.objects as Retiro[];

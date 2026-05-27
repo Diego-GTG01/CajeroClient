@@ -1,19 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Cajero } from '../Interfaces/cajero';
-import { Result } from '../Interfaces/result';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CajeroService {
+export class AuthService {
   url = 'http://localhost:8080/';
   private http = inject(HttpClient);
 
-  getAllCajeros(): Observable<Result<Cajero[]>>{
-    return this.http.get<Result<Cajero[]>>(this.url+'cajero/getAll');
+  auth(userAuth: { [key: string]: string }): Observable<any> {
+    console.log('Datos a enviar:', userAuth);
+    return this.http.post<any>(this.url + 'auth/login', userAuth);
   }
-
-
 }

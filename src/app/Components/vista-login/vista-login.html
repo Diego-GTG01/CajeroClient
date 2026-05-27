@@ -1,0 +1,58 @@
+<div class="login-container">
+  
+  @if (cajero) {
+    <div class="cajero-info">
+      <h3>Cajero Seleccionado</h3>
+      <p><strong>ID:</strong> {{ cajero.idCajero }}</p>
+      <p><strong>Ubicación:</strong> {{ cajero.ubicacion || 'No especificada' }}</p>
+      <p><strong>Estado:</strong> {{ cajero.estado || 'Desconocido' }}</p>
+    </div>
+    <hr />
+  }
+
+  <h2>Iniciar Sesión</h2>
+
+  <form #loginForm="ngForm" (ngSubmit)="iniciarSesion()">
+    
+    <div class="campo">
+      <label>Número de tarjeta</label>
+      <input
+        type="text"
+        name="numTarjeta"
+        [(ngModel)]="numTarjeta"
+        #tarjetaInput="ngModel"
+        (keypress)="soloNumeros($event)"
+        maxlength="20"
+        minlength="20"
+        pattern="^[0-9]{20}$"
+        placeholder="20 dígitos numéricos"
+        required
+      />
+      @if (tarjetaInput.invalid && (tarjetaInput.dirty || tarjetaInput.touched)) {
+        <span class="error-msg">La tarjeta debe tener exactamente 20 números.</span>
+      }
+    </div>
+
+    <div class="campo">
+      <label>PIN</label>
+      <input
+        type="password"
+        name="pin"
+        [(ngModel)]="pin"
+        #pinInput="ngModel"
+        (keypress)="soloNumeros($event)"
+        maxlength="4"
+        minlength="4"
+        pattern="^[0-9]{4}$"
+        placeholder="****"
+        required
+      />
+      @if (pinInput.invalid && (pinInput.dirty || pinInput.touched)) {
+        <span class="error-msg">El PIN debe tener exactamente 4 números.</span>
+      }
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+
+  </form>
+</div>

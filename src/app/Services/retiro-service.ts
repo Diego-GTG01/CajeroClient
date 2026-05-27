@@ -1,21 +1,22 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Transaccion } from '../Interfaces/transaccion';
 import { Observable } from 'rxjs';
 import { Result } from '../Interfaces/result';
 import { Retiro } from '../Interfaces/retiro';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class RetiroService {
-
-  url = "http://192.167.0.114:8080/";
+  url = 'http://localhost:8080/';
   private http = inject(HttpClient);
 
-  transact(transaccion: Transaccion): Observable<Result<Retiro>>{
-    return this.http.post<Result<Retiro>>(this.url+'Cajero/transact', transaccion);
+  transact(transaccion: Transaccion, token: string): Observable<Result<Retiro>> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.post<Result<Retiro>>(this.url + 'Cajero/transact', transaccion, {headers});
   }
-  
 }

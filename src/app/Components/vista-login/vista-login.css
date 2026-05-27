@@ -1,0 +1,264 @@
+.login-container {
+  width: 320px;
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.campo {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1565c0;
+}   
+
+
+/* Contenedor principal centrado en la pantalla */
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #333333;
+}
+
+/* Sección informativa del cajero */
+.cajero-info {
+  background-color: #f4f7f6;
+  border-left: 4px solid #007bff;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+}
+
+.cajero-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+.cajero-info p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+/* Separador visual elegante */
+hr {
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 20px 0;
+}
+
+/* Título del formulario */
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #222222;
+  font-weight: 600;
+}
+
+/* Estructura de los campos de entrada */
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.campo label {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #666666;
+}
+
+.campo input {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+/* Efecto Focus al hacer clic en los inputs */
+.campo input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* Botón de enviar */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* --- VALIDACIONES DE BORDES (ANGULAR) --- */
+
+/* Estado de éxito: Campo válido y modificado */
+.campo input.ng-valid.ng-dirty {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+}
+
+/* Estado de error: Campo inválido y tocado/modificado */
+.campo input.ng-invalid.ng-dirty,
+.campo input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+}
+
+/* Mantener el comportamiento del focus suave mientras se escribe */
+.campo input:focus {
+  outline: none;
+}
+
+/* --- ESTILOS GENERALES Y SOPORTE --- */
+
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.cajero-info {
+  background-color: #f4f7f6;
+  border-left: 4px solid #007bff;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+}
+
+.cajero-info h3 {
+  margin: 0 0 10px 0;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+.cajero-info p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 20px 0;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #222222;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.campo label {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #666666;
+}
+
+.campo input {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.error-msg {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+button[type="submit"]:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
