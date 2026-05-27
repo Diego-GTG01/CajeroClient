@@ -1,12 +1,12 @@
 <div class="atm-shell">
   <header class="atm-header">
     <div class="atm-logo">
-      <span class="atm-logo-icon">⬡</span>
+      <span class="atm-logo-icon"><i class="fa-solid fa-trident"></i></span>
       <span class="atm-logo-text">BANCA DIGITAL</span>
     </div>
     <div class="atm-session">
       <span class="atm-session-dot"></span>
-      <span>Sesión activa</span>
+      <span><i class="fa-solid fa-user-shield"></i> Sesión activa</span>
     </div>
   </header>
 
@@ -15,7 +15,7 @@
       <div class="spinner-ring"></div>
       <div class="spinner-ring spinner-ring--2"></div>
     </div>
-    <p class="procesando-text">LEYENDO TARJETA…</p>
+    <p class="procesando-text"><i class="fa-solid fa-credit-card fa-pulse"></i> LEYENDO TARJETA…</p>
     <p class="procesando-sub">Obteniendo datos de su cuenta.</p>
   </main>
 
@@ -24,8 +24,12 @@
       <div class="cliente-card-inner">
         <div class="cliente-info">
           <p class="cliente-label">TITULAR</p>
-          <h2 class="cliente-nombre">{{ cliente.nombre | uppercase }}</h2>
-          <span class="cliente-rango-badge">{{ cliente.rango }}</span>
+          <h2 class="cliente-nombre">
+            <i class="fa-solid fa-user"></i> {{ cliente.nombre | uppercase }}
+          </h2>
+          <span class="cliente-rango-badge">
+            <i class="fa-solid fa-gem"></i> {{ cliente.rango }}
+          </span>
         </div>
         <div class="cliente-saldo">
           <p class="cliente-label">SALDO DISPONIBLE</p>
@@ -39,16 +43,16 @@
     </section>
 
     <main class="atm-screen" *ngIf="estado === 'formulario'">
-      <h3 class="screen-title">RETIRO DE EFECTIVO</h3>
+      <h3 class="screen-title"><i class="fa-solid fa-money-bill-transfer"></i> RETIRO DE EFECTIVO</h3>
 
       <div class="context-row">
         <div class="context-item">
-          <span class="context-label">TARJETA: </span
-          ><span class="context-value">****{{ numTarjeta.toString().slice(-4) }}</span>
+          <span class="context-label"><i class="fa-solid fa-credit-card"></i> TARJETA: </span>
+          <span class="context-value">****{{ numTarjeta.toString().slice(-4) }}</span>
         </div>
         <div class="context-divider"></div>
         <div class="context-item">
-          <span class="context-label">CAJERO</span>
+          <span class="context-label"><i class="fa-solid fa-atm"></i> CAJERO: </span>
           <span class="context-value">#{{ idCajero }}</span>
         </div>
       </div>
@@ -71,17 +75,19 @@
           <span class="monto-currency-code">MXN</span>
         </div>
 
-        <p class="monto-hint" *ngIf="monto !== null && monto <= 0">El monto debe ser mayor a $0.</p>
+        <p class="monto-hint" *ngIf="monto !== null && monto <= 0">
+          <i class="fa-solid fa-circle-exclamation"></i> El monto debe ser mayor a $0.
+        </p>
         <p class="monto-hint" *ngIf="monto !== null && monto > cliente.saldo">
-          Saldo insuficiente.
+          <i class="fa-solid fa-triangle-exclamation"></i> Saldo insuficiente.
         </p>
         <p class="monto-hint" *ngIf="monto !== null && (monto * 2) % 1 !== 0">
-          Solo se permiten cantidades con centavos de $0.00 o $0.50.
+          <i class="fa-solid fa-circle-info"></i> Solo se permiten cantidades con centavos de $0.00 o $0.50.
         </p>
       </div>
 
       <div class="montos-rapidos">
-        <p class="montos-rapidos-label">MONTOS RÁPIDOS</p>
+        <p class="montos-rapidos-label"><i class="fa-solid fa-bolt"></i> MONTOS RÁPIDOS</p>
         <div class="montos-rapidos-grid">
           <button
             class="btn-rapido"
@@ -90,13 +96,17 @@
             [disabled]="m > cliente.saldo"
             (click)="monto = m"
           >
-            ${{ m | number }}
+            <i class="fa-solid fa-money-bill-wave" style="font-size: 0.8rem; margin-right: 4px;"></i> ${{ m | number }}
           </button>
         </div>
       </div>
 
       <button class="btn-confirmar" [disabled]="!montoValido" (click)="confirmarRetiro()">
-        CONFIRMAR RETIRO <span class="btn-icon">→</span>
+        CONFIRMAR RETIRO <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+      </button>
+
+      <button type="button" class="btn-volver" (click)="volver()">
+        <i class="fa-solid fa-power-off"></i> CERRAR SESIÓN
       </button>
     </main>
 
@@ -105,45 +115,45 @@
         <div class="spinner-ring"></div>
         <div class="spinner-ring spinner-ring--2"></div>
       </div>
-      <p class="procesando-text">PROCESANDO TRANSACCIÓN…</p>
+      <p class="procesando-text"><i class="fa-solid fa-vault fa-spin"></i> PROCESANDO TRANSACCIÓN…</p>
       <p class="procesando-sub">Por favor no retire su tarjeta.</p>
     </main>
 
     <main class="atm-screen" *ngIf="estado === 'exito'">
       <div class="resultado-header">
-        <span class="resultado-icon resultado-icon--ok">✓</span>
+        <span class="resultado-icon resultado-icon--ok"><i class="fa-solid fa-circle-check"></i></span>
         <h3 class="resultado-titulo">RETIRO EXITOSO</h3>
       </div>
 
       <div class="comprobante" *ngIf="resultados.length > 0">
         <div class="comprobante-row">
-          <span class="comp-label">FOLIO</span>
+          <span class="comp-label"><i class="fa-solid fa-hashtag"></i> FOLIO</span>
           <span class="comp-value">{{ resultados[0].folio }}</span>
         </div>
         <div class="comprobante-row">
-          <span class="comp-label">TITULAR</span>
+          <span class="comp-label"><i class="fa-solid fa-user"></i> TITULAR</span>
           <span class="comp-value">{{ resultados[0].usuario }}</span>
         </div>
         <div class="comprobante-row">
-          <span class="comp-label">CUENTA</span>
+          <span class="comp-label"><i class="fa-solid fa-address-card"></i> CUENTA</span>
           <span class="comp-value">{{ resultados[0].NumCuenta }}</span>
         </div>
         <div class="comprobante-row">
-          <span class="comp-label">TARJETA USADA</span>
+          <span class="comp-label"><i class="fa-solid fa-credit-card"></i> TARJETA USADA</span>
           <span class="comp-value">**** {{ resultados[0].NumTarjeta | slice: -4 }}</span>
         </div>
         <div class="comprobante-row">
-          <span class="comp-label">ESTATUS</span>
+          <span class="comp-label"><i class="fa-solid fa-circle-info"></i> ESTATUS</span>
           <span class="comp-value comp-status">{{ resultados[0].Status }}</span>
         </div>
       </div>
 
       <div class="denominaciones" *ngIf="resultados.length > 0">
-        <p class="denominaciones-titulo">DESGLOSE</p>
+        <p class="denominaciones-titulo"><i class="fa-solid fa-receipt"></i> DESGLOSE DE EFECTIVO</p>
         <table class="denominaciones-tabla">
           <thead>
             <tr>
-              <th>Tipo</th>
+              <th><i class="fa-solid fa-coins"></i> Tipo</th>
               <th>Denominación</th>
               <th>Cantidad</th>
               <th>Subtotal</th>
@@ -151,8 +161,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let r of resultados">
-              <td>{{ r.tipo }}</td>
-              <td>{{ r.denominacion }}</td>
+              <td>
+                <i [class]="r.tipo === 'Billete' ? 'fa-solid fa-money-bill' : 'fa-solid fa-circle-dot'"></i> 
+                {{ r.tipo }}
+              </td>
+              <td>${{ r.denominacion }}</td>
               <td>{{ r.cantidad }}</td>
               <td>{{ r.subtotal | currency: 'MXN' : 'symbol' : '1.2-2' }}</td>
             </tr>
@@ -160,23 +173,25 @@
         </table>
       </div>
 
-      <button class="btn-nuevo" (click)="reiniciar()">NUEVA OPERACIÓN</button>
+      <button class="btn-nuevo" (click)="reiniciar()">
+        <i class="fa-solid fa-rotate-left"></i> NUEVA OPERACIÓN
+      </button>
     </main>
   </ng-container>
 
   <main class="atm-screen atm-screen--center" *ngIf="estado === 'error'">
-    <span class="resultado-icon resultado-icon--error">✕</span>
+    <span class="resultado-icon resultado-icon--error"><i class="fa-solid fa-circle-xmark"></i></span>
     <h3 class="resultado-titulo resultado-titulo--error">
       {{ errorCarga ? 'ERROR AL LEER TARJETA' : 'TRANSACCIÓN RECHAZADA' }}
     </h3>
     <p class="error-mensaje">{{ errorCarga || mensajeError }}</p>
     <button class="btn-nuevo btn-nuevo--error" (click)="reiniciar()">
-      {{ errorCarga ? 'REINTENTAR' : 'INTENTAR DE NUEVO' }}
+      <i class="fa-solid fa-arrows-rotate"></i> {{ errorCarga ? 'REINTENTAR' : 'INTENTAR DE NUEVO' }}
     </button>
   </main>
 
   <footer class="atm-footer">
-    <span>Servicio disponible 24 / 7</span>
+    <span><i class="fa-solid fa-clock"></i> Servicio disponible 24 / 7</span>
     <span class="footer-sep">|</span>
     <span>Cajero #{{ idCajero }}</span>
   </footer>

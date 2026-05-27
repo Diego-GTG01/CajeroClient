@@ -31,6 +31,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+  border-radius: 15px;
 }
 
 .atm-logo {
@@ -326,6 +327,10 @@ body {
 
 .resultado-icon--error {
   background: #e74c3c;
+}
+
+.resultado-icon--warning {
+  background: #f39c12;
 }
 
 .resultado-titulo {

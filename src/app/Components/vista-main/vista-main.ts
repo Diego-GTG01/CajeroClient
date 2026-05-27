@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CajeroService } from '../../Services/cajero-service';
 import { Cajero } from '../../Interfaces/cajero';
+import Swal from 'sweetalert2'; 
 
 @Component({
   selector: 'app-vista-main',
@@ -46,6 +47,43 @@ export class VistaMain implements OnInit {
 
   seleccionarCajero(cajero: Cajero): void {
     console.log('Cajero seleccionado:', cajero);
+    const monto = cajero.total; 
+
+   if (monto <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Cajero No Disponible',
+        text: 'Este cajero se encuentra sin fondos en este momento. Por favor, selecciona otro.',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Entendido'
+      });
+      return; 
+    }
+
+    if (monto < 5000) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Poco Efectivo Disponible',
+        text: `Este cajero tiene fondos limitados ($${monto}). ¿Deseas continuar de todos modos?`,
+        showCancelButton: true,
+        confirmButtonColor: ' #22c55e',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, continuar',
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true,
+
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.redirigirAClase(cajero);
+        }
+      });
+      return;
+    }
+
+    this.redirigirAClase(cajero);
+  }
+
+  private redirigirAClase(cajero: Cajero): void {
     this.router.navigate(['/login'], { state: { cajeroSeleccionado: cajero } });
   }
 

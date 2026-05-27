@@ -1,34 +1,23 @@
 <div class="atm-shell">
-  <!-- HEADER -->
   <div class="atm-header">
     <div class="atm-logo">
-      <span class="atm-logo-icon">🏧</span>
+      <span class="atm-logo-icon"><i class="fa-solid fa-vault"></i></span>
       <span>Sistema de Cajeros</span>
-    </div>
-
-    <div class="atm-session">
-      <span class="atm-session-dot"></span>
-      <span>En línea</span>
     </div>
   </div>
 
-  <!-- LOADING -->
   <div *ngIf="cargando" class="atm-screen atm-screen--center">
-    <div class="spinner"></div>
-
+    <div class="spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
     <div class="procesando-text">Cargando cajeros...</div>
-
     <div class="procesando-sub">Espere un momento</div>
   </div>
 
-  <!-- ERROR -->
   <div *ngIf="error" class="atm-screen">
     <div class="error-mensaje">
-      {{ error }}
+      <i class="fa-solid fa-triangle-exclamation"></i> {{ error }}
     </div>
   </div>
 
-  <!-- LISTA DE CAJEROS -->
   <div *ngIf="!cargando && cajeros.length > 0" class="atm-grid">
     <div
       class="atm-screen atm-card"
@@ -41,11 +30,12 @@
       }"
     >
       <div class="resultado-header">
-        <div [class]="obtenerClaseEstado(cajero.total || 0)">$</div>
+        <div [class]="obtenerClaseEstado(cajero.total || 0)">
+          <i class="fa-solid fa-money-bill-wave"></i>
+        </div>
 
         <div>
           <h2 class="resultado-titulo">Cajero #{{ cajero.idCajero }}</h2>
-
           <p>
             {{ obtenerEstado(cajero.total || 0) }}
           </p>
@@ -54,30 +44,25 @@
 
       <div class="comprobante">
         <div class="comprobante-row">
-          <span class="comp-label">ID</span>
-
-          <span class="comp-value">
-            {{ cajero.idCajero }}
+          <span class="comp-label">
+            <i class="fa-solid fa-location-dot"></i> Ubicación
           </span>
-        </div>
-
-        <div class="comprobante-row">
-          <span class="comp-label">Ubicación</span>
-
           <span class="comp-value">
             {{ cajero.ubicacion || 'Sin ubicación' }}
           </span>
         </div>
 
         <div class="comprobante-row">
-          <span class="comp-label">Dinero disponible</span>
-
+          <span class="comp-label">
+            <i class="fa-solid fa-sack-dollar"></i> Dinero disponible
+          </span>
           <span class="comp-value"> $ {{ cajero.total | number }} </span>
         </div>
 
         <div class="comprobante-row">
-          <span class="comp-label">Estado</span>
-
+          <span class="comp-label">
+            <i class="fa-solid fa-circle-info"></i> Estado
+          </span>
           <span
             class="comp-value"
             [style.color]="
@@ -91,14 +76,15 @@
     </div>
   </div>
 
-  <!-- SIN DATOS -->
   <div *ngIf="!cargando && cajeros.length === 0" class="atm-screen atm-screen--center">
+    <div style="font-size: 2rem; margin-bottom: 10px; color: #7f8c8d;">
+      <i class="fa-solid fa-box-open"></i>
+    </div>
     <h2 class="screen-title">No hay cajeros disponibles</h2>
   </div>
 
-  <!-- FOOTER -->
   <div class="atm-footer">
-    <span>ATM SYSTEM</span>
+    <span><i class="fa-solid fa-microchip"></i> ATM SYSTEM</span>
     <span>•</span>
     <span>Monitor de Cajeros</span>
   </div>

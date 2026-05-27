@@ -1,22 +1,27 @@
 <div class="login-container">
+  <h2><i class="fa-solid fa-shield-halved"></i> Iniciar Sesión</h2>
   
   @if (cajero) {
-    <div class="cajero-info">
-      <h3>Cajero Seleccionado</h3>
-      <p><strong>ID:</strong> {{ cajero.idCajero }}</p>
-      <p><strong>Ubicación:</strong> {{ cajero.ubicacion || 'No especificada' }}</p>
-      <p><strong>Estado:</strong> {{ cajero.estado || 'Desconocido' }}</p>
+    <div class="cajero-badge">
+      <div class="cajero-header">
+        <span class="dot" [class.online]="cajero.estado === 'Activo'"></span>
+        <h3><i class="fa-solid fa-atm"></i> Cajero: {{ cajero.idCajero }}</h3>
+      </div>
+      <p class="cajero-ubi">
+        <i class="fa-solid fa-location-dot"></i> {{ cajero.ubicacion || 'Ubicación no especificada' }}
+      </p>
     </div>
-    <hr />
   }
 
-  <h2>Iniciar Sesión</h2>
-
-  <form #loginForm="ngForm" (ngSubmit)="iniciarSesion()">
+  <form #loginForm="ngForm" (ngSubmit)="iniciarSesion()" autocomplete="off">
     
-    <div class="campo">
-      <label>Número de tarjeta</label>
+    <div
+      class="campo"
+      [class.has-error]="tarjetaInput.invalid && (tarjetaInput.dirty || tarjetaInput.touched)"
+    >
+      <label for="numTarjeta"><i class="fa-solid fa-credit-card"></i> Número de tarjeta</label>
       <input
+        id="numTarjeta"
         type="text"
         name="numTarjeta"
         [(ngModel)]="numTarjeta"
@@ -25,17 +30,20 @@
         maxlength="20"
         minlength="20"
         pattern="^[0-9]{20}$"
-        placeholder="20 dígitos numéricos"
+        placeholder="0000 0000 0000 0000 0000"
         required
       />
       @if (tarjetaInput.invalid && (tarjetaInput.dirty || tarjetaInput.touched)) {
-        <span class="error-msg">La tarjeta debe tener exactamente 20 números.</span>
+        <span class="error-msg">
+          <i class="fa-solid fa-circle-xmark"></i> Debe contener exactamente 20 dígitos numéricos.
+        </span>
       }
     </div>
 
-    <div class="campo">
-      <label>PIN</label>
+    <div class="campo" [class.has-error]="pinInput.invalid && (pinInput.dirty || pinInput.touched)">
+      <label for="pin"><i class="fa-solid fa-key"></i> PIN Secreto</label>
       <input
+        id="pin"
         type="password"
         name="pin"
         [(ngModel)]="pin"
@@ -44,15 +52,24 @@
         maxlength="4"
         minlength="4"
         pattern="^[0-9]{4}$"
-        placeholder="****"
+        placeholder="••••"
         required
       />
       @if (pinInput.invalid && (pinInput.dirty || pinInput.touched)) {
-        <span class="error-msg">El PIN debe tener exactamente 4 números.</span>
+        <span class="error-msg">
+          <i class="fa-solid fa-circle-xmark"></i> El PIN debe ser de exactamente 4 números.
+        </span>
       }
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
-
+    <div class="form-actions">
+      <button type="button" class="btn-volver" (click)="volver()">
+        <i class="fa-solid fa-arrow-left"></i> Volver
+      </button>
+      
+      <button type="submit" [disabled]="loginForm.invalid">
+        <i class="fa-solid fa-lock-open"></i> Ingresar de forma segura
+      </button>
+    </div>
   </form>
 </div>

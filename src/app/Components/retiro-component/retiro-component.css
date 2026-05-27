@@ -15,12 +15,17 @@ body {
 }
 
 .atm-shell {
-  max-width: 550px;
+  max-width: 750px;
   width: 100%;
   background: #f5f7fa;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .atm-header {
@@ -32,6 +37,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+  border-radius: 15px;
 }
 
 .atm-logo {
@@ -62,7 +68,7 @@ body {
 
 .cliente-card {
   background: white;
-  margin: 20px;
+  margin-top: 20px;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -119,7 +125,7 @@ body {
 
 .atm-screen {
   background: white;
-  margin: 0 20px 20px 20px;
+  margin-top: 20px;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -261,7 +267,7 @@ body {
 
 .btn-confirmar {
   width: 100%;
-  background: #1a3a5c;
+  background:  #22c55e;
   color: white;
   border: none;
   padding: 14px;
@@ -273,7 +279,9 @@ body {
 }
 
 .btn-confirmar:hover:not(:disabled) {
-  background: #0f2a44;
+  background: #22c55e;
+  padding: 25px;
+
 }
 
 .btn-confirmar:disabled {
@@ -292,7 +300,9 @@ body {
 }
 
 @keyframes girar {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .procesando-text {
@@ -432,37 +442,37 @@ body {
   body {
     padding: 10px;
   }
-  
+
   .cliente-card-inner {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .context-row {
     flex-direction: column;
   }
-  
+
   .context-divider {
     display: none;
   }
-  
+
   .montos-rapidos-grid {
     justify-content: center;
   }
-  
+
   .resultado-header {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .screen-title {
     font-size: 18px;
   }
-  
+
   .monto-input {
     font-size: 20px;
   }
-  
+
   .monto-currency {
     font-size: 20px;
   }
@@ -473,13 +483,40 @@ body {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .btn-rapido {
     padding: 6px 12px;
     font-size: 12px;
   }
-  
+
   .denominaciones-tabla {
     font-size: 12px;
   }
+}
+.btn-volver {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  background-color: #aaa;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 8px;
+}
+.btn-volver:hover {
+  width: 100%;
+  padding: 25px;
+  background-color: #e74c3c;
+  color: white;
+  border: 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 8px;
 }
