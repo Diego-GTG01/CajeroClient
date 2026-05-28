@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CajeroService } from '../../Services/cajero-service';
 import { Cajero } from '../../Interfaces/cajero';
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vista-main',
@@ -47,17 +47,17 @@ export class VistaMain implements OnInit {
 
   seleccionarCajero(cajero: Cajero): void {
     console.log('Cajero seleccionado:', cajero);
-    const monto = cajero.total; 
+    const monto = cajero.total;
 
-   if (monto <= 0) {
+    if (monto <= 0) {
       Swal.fire({
         icon: 'error',
         title: 'Cajero No Disponible',
         text: 'Este cajero se encuentra sin fondos en este momento. Por favor, selecciona otro.',
         confirmButtonColor: '#d33',
-        confirmButtonText: 'Entendido'
+        confirmButtonText: 'Entendido',
       });
-      return; 
+      return;
     }
 
     if (monto < 5000) {
@@ -71,7 +71,6 @@ export class VistaMain implements OnInit {
         confirmButtonText: 'Sí, continuar',
         cancelButtonText: 'Cancelar',
         reverseButtons: true,
-
       }).then((result) => {
         if (result.isConfirmed) {
           this.redirigirAClase(cajero);
@@ -105,5 +104,72 @@ export class VistaMain implements OnInit {
       return 'resultado-icon resultado-icon--warning';
     }
     return 'resultado-icon resultado-icon--success';
+  }
+
+  agregarCajero(): void {
+    Swal.fire({
+      title: 'Agregar Cajero',
+      html: `
+      <input id="ubicacion" class="swal2-input" placeholder="Ubicación del cajero">
+    `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        const ubicacion = (document.getElementById('ubicacion') as HTMLInputElement).value;
+    
+        if (!ubicacion) {
+          Swal.showValidationMessage('Por favor ingresa una ubicación válida y monto inicial');
+          return null;
+        }
+        return { ubicacion };
+      },
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        const nuevoCajero: Cajero = {
+          idCajero: Date.now(),
+          ubicacion: result.value.ubicacion,
+          total: result.value.total,
+        };
+
+        this.cajeroService.addCajero(nuevoCajero).subscribe({
+          next: () => {
+            Swal.fire('Éxito', 'Cajero agregado correctamente', 'success');
+            this.cargarCajeros();
+          },
+          error: () => {
+            Swal.fire('Error', 'No se pudo agregar el cajero', 'error');
+          },
+        });
+      }
+    });
+  }
+
+  eliminarCajero(id: number, event: Event): void {
+    event.stopPropagation();
+    Swal.fire({
+      title: '¿Eliminar cajero?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cajeroService.deleteCajero(id).subscribe({
+          next: () => {
+            Swal.fire('Eliminado', 'El cajero fue eliminado', 'success');
+            this.cargarCajeros();
+          },
+          error: () => {
+            Swal.fire('Error', 'No se pudo eliminar el cajero', 'error');
+          },
+        });
+      }
+    });
   }
 }

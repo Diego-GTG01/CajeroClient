@@ -13,10 +13,9 @@
   </div>
 
   <div *ngIf="error" class="atm-screen">
-    <div class="error-mensaje">
-      <i class="fa-solid fa-triangle-exclamation"></i> {{ error }}
-    </div>
+    <div class="error-mensaje"><i class="fa-solid fa-triangle-exclamation"></i> {{ error }}</div>
   </div>
+  <button class="btn-confirmar" (click)="agregarCajero()">+ Agregar Cajero</button>
 
   <div *ngIf="!cargando && cajeros.length > 0" class="atm-grid">
     <div
@@ -44,25 +43,14 @@
 
       <div class="comprobante">
         <div class="comprobante-row">
-          <span class="comp-label">
-            <i class="fa-solid fa-location-dot"></i> Ubicación
-          </span>
+          <span class="comp-label"> <i class="fa-solid fa-location-dot"></i> Ubicación </span>
           <span class="comp-value">
             {{ cajero.ubicacion || 'Sin ubicación' }}
           </span>
         </div>
 
         <div class="comprobante-row">
-          <span class="comp-label">
-            <i class="fa-solid fa-sack-dollar"></i> Dinero disponible
-          </span>
-          <span class="comp-value"> $ {{ cajero.total | number }} </span>
-        </div>
-
-        <div class="comprobante-row">
-          <span class="comp-label">
-            <i class="fa-solid fa-circle-info"></i> Estado
-          </span>
+          <span class="comp-label"> <i class="fa-solid fa-circle-info"></i> Estado </span>
           <span
             class="comp-value"
             [style.color]="
@@ -73,11 +61,13 @@
           </span>
         </div>
       </div>
+      <!-- Botón eliminar -->
+      <button class="btn-nuevo" (click)="eliminarCajero(cajero.idCajero, $event)">Eliminar</button>
     </div>
   </div>
 
   <div *ngIf="!cargando && cajeros.length === 0" class="atm-screen atm-screen--center">
-    <div style="font-size: 2rem; margin-bottom: 10px; color: #7f8c8d;">
+    <div style="font-size: 2rem; margin-bottom: 10px; color: #7f8c8d">
       <i class="fa-solid fa-box-open"></i>
     </div>
     <h2 class="screen-title">No hay cajeros disponibles</h2>
