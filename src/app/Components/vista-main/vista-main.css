@@ -261,24 +261,34 @@ body {
 
 .btn-confirmar {
   width: 100%;
-  background: #1a3a5c;
-  color: white;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed); /* Degradado moderno */
+  color: #ffffff;
   border: none;
   padding: 14px;
   border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
 }
 
 .btn-confirmar:hover:not(:disabled) {
-  background: #0f2a44;
+  filter: brightness(1.1); /* Brilla un poco más al pasar el mouse */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.4);
+}
+
+.btn-confirmar:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 .btn-confirmar:disabled {
-  opacity: 0.5;
+  background: #e0e5ec; /* Pierde el gradiente al estar deshabilitado */
+  color: #a0aab5;
   cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 .spinner {
@@ -292,7 +302,9 @@ body {
 }
 
 @keyframes girar {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .procesando-text {
@@ -399,7 +411,7 @@ body {
 
 .btn-nuevo {
   width: 100%;
-  background: #f0f2f5;
+  background: #0065fd;
   border: none;
   padding: 12px;
   border-radius: 10px;
@@ -410,6 +422,22 @@ body {
 
 .btn-nuevo:hover {
   background: #e0e5ec;
+}
+
+.btn-eliminar {
+  width: 100%;
+  background: #e0e5ec;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn-eliminar:hover {
+  background: #d33;
+  color: #fffcfc;
 }
 
 .error-mensaje {
@@ -436,37 +464,37 @@ body {
   body {
     padding: 10px;
   }
-  
+
   .cliente-card-inner {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .context-row {
     flex-direction: column;
   }
-  
+
   .context-divider {
     display: none;
   }
-  
+
   .montos-rapidos-grid {
     justify-content: center;
   }
-  
+
   .resultado-header {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .screen-title {
     font-size: 18px;
   }
-  
+
   .monto-input {
     font-size: 20px;
   }
-  
+
   .monto-currency {
     font-size: 20px;
   }
@@ -477,12 +505,12 @@ body {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .btn-rapido {
     padding: 6px 12px;
     font-size: 12px;
   }
-  
+
   .denominaciones-tabla {
     font-size: 12px;
   }
@@ -497,12 +525,14 @@ body {
 
 .atm-card {
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .atm-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* DISPONIBILIDAD */

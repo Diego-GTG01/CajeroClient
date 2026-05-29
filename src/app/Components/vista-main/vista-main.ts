@@ -112,13 +112,16 @@ export class VistaMain implements OnInit {
       html: `
       <input id="ubicacion" class="swal2-input" placeholder="Ubicación del cajero">
     `,
-      focusConfirm: false,
+      focusConfirm: true,
       showCancelButton: true,
       confirmButtonText: 'Guardar',
       cancelButtonText: 'Cancelar',
+      confirmButtonColor: ' #22c55e',
+      cancelButtonColor: '#d33',
+      reverseButtons: true,
       preConfirm: () => {
         const ubicacion = (document.getElementById('ubicacion') as HTMLInputElement).value;
-    
+
         if (!ubicacion) {
           Swal.showValidationMessage('Por favor ingresa una ubicación válida y monto inicial');
           return null;
@@ -128,17 +131,20 @@ export class VistaMain implements OnInit {
     }).then((result) => {
       if (result.isConfirmed && result.value) {
         const nuevoCajero: Cajero = {
-          idCajero: Date.now(),
+          idCajero: 0,
           ubicacion: result.value.ubicacion,
-          total: result.value.total,
+          total: 0,
+          estado: 'Activo'
         };
+        console.log(nuevoCajero)
 
         this.cajeroService.addCajero(nuevoCajero).subscribe({
           next: () => {
             Swal.fire('Éxito', 'Cajero agregado correctamente', 'success');
             this.cargarCajeros();
           },
-          error: () => {
+          error: (err) => {
+            console.warn(err)
             Swal.fire('Error', 'No se pudo agregar el cajero', 'error');
           },
         });
@@ -153,8 +159,8 @@ export class VistaMain implements OnInit {
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      confirmButtonColor: ' #22c55e',
+      cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
       reverseButtons: true,
