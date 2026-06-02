@@ -1,81 +1,157 @@
-<div class="atm-shell">
-  <div class="atm-header">
-    <div class="atm-logo">
-      <span class="atm-logo-icon"><i class="fa-solid fa-vault"></i></span>
-      <span>Sistema de Cajeros</span>
-    </div>
-  </div>
+<div class="app-background">
+  <div class="app-container">
+    <div class="atm-shell">
+      <!-- HEADER -->
+      <div class="atm-header">
+        <div class="atm-logo">
+          <div class="atm-logo-circle">
+            <i class="fa-solid fa-vault"></i>
+          </div>
 
-  <div *ngIf="cargando" class="atm-screen atm-screen--center">
-    <div class="spinner"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
-    <div class="procesando-text">Cargando cajeros...</div>
-    <div class="procesando-sub">Espere un momento</div>
-  </div>
-
-  <div *ngIf="error" class="atm-screen">
-    <div class="error-mensaje"><i class="fa-solid fa-triangle-exclamation"></i> {{ error }}</div>
-  </div>
-  <button class="btn-confirmar" (click)="agregarCajero()">+ Agregar Cajero</button>
-
-  <div *ngIf="!cargando && cajeros.length > 0" class="atm-grid">
-    <div
-      class="atm-screen atm-card"
-      *ngFor="let cajero of cajeros"
-      (click)="seleccionarCajero(cajero)"
-      [ngClass]="{
-        'atm-disponible': cajero.total >= 5000,
-        'atm-poco': cajero.total > 0 && cajero.total < 5000,
-        'atm-vacio': cajero.total <= 0,
-      }"
-    >
-      <div class="resultado-header">
-        <div [class]="obtenerClaseEstado(cajero.total || 0)">
-          <i class="fa-solid fa-money-bill-wave"></i>
+          <div class="atm-brand">
+            <h1>Sistema de Cajeros</h1>
+            <span>Monitoreo y Gestión ATM</span>
+          </div>
         </div>
 
-        <div>
-          <h2 class="resultado-titulo">Cajero #{{ cajero.idCajero }}</h2>
-          <p>
-            {{ obtenerEstado(cajero.total || 0) }}
-          </p>
+        <div class="atm-status">
+          <span class="atm-status-dot"></span>
+          Sistema Operativo
         </div>
       </div>
 
-      <div class="comprobante">
-        <div class="comprobante-row">
-          <span class="comp-label"> <i class="fa-solid fa-location-dot"></i> Ubicación </span>
-          <span class="comp-value">
-            {{ cajero.ubicacion || 'Sin ubicación' }}
-          </span>
-        </div>
+      <!-- LOADING -->
 
-        <div class="comprobante-row">
-          <span class="comp-label"> <i class="fa-solid fa-circle-info"></i> Estado </span>
-          <span
-            class="comp-value"
-            [style.color]="
-              cajero.total <= 0 ? '#e74c3c' : cajero.total < 5000 ? '#f39c12' : '#2ecc71'
-            "
-          >
-            {{ obtenerEstado(cajero.total) }}
-          </span>
+      <div *ngIf="cargando" class="atm-screen atm-screen--center">
+        <div class="spinner">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </div>
+        <div class="procesando-text">Cargando cajeros...</div>
+        <div class="procesando-sub">Espere un momento</div>
+      </div>
+
+      <!-- ERROR -->
+
+      <div *ngIf="error" class="atm-screen">
+        <div class="error-mensaje">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          {{ error }}
         </div>
       </div>
-      <!-- Botón eliminar -->
-      <button class="btn-eliminar" (click)="eliminarCajero(cajero.idCajero, $event)">Eliminar</button>
-    </div>
-  </div>
 
-  <div *ngIf="!cargando && cajeros.length === 0" class="atm-screen atm-screen--center">
-    <div style="font-size: 2rem; margin-bottom: 10px; color: #7f8c8d">
-      <i class="fa-solid fa-box-open"></i>
-    </div>
-    <h2 class="screen-title">No hay cajeros disponibles</h2>
-  </div>
+      <!-- DASHBOARD -->
 
-  <div class="atm-footer">
-    <span><i class="fa-solid fa-microchip"></i> ATM SYSTEM</span>
-    <span>•</span>
-    <span>Monitor de Cajeros</span>
+      <div *ngIf="!cargando" class="dashboard-resumen">
+        <div class="resumen-card">
+          <span>Total Cajeros</span>
+          <strong>{{ cajeros.length }}</strong>
+        </div>
+
+        <div class="resumen-card">
+          <span>Efectivo Disponible</span>
+          <strong>${{ totalSistema | number }}</strong>
+        </div>
+      </div>
+
+      <!-- ACCIONES -->
+
+      <div class="acciones-bar">
+        <button class="btn-confirmar" (click)="agregarCajero()">
+          <i class="fa-solid fa-building-columns"></i>
+          Agregar Cajero
+        </button>
+
+        <button class="btn-confirmar btn-secundario" (click)="agregarUsuario()">
+          <i class="fa-solid fa-user-plus"></i>
+          Agregar Usuario
+        </button>
+      </div>
+
+      <!-- LISTADO -->
+
+      <div *ngIf="!cargando && cajeros.length > 0" class="atm-grid">
+        <div
+          class="atm-screen atm-card"
+          *ngFor="let cajero of cajeros"
+          (click)="seleccionarCajero(cajero)"
+          [ngClass]="{
+            'atm-disponible': cajero.total >= 5000,
+            'atm-poco': cajero.total > 0 && cajero.total < 5000,
+            'atm-vacio': cajero.total <= 0,
+          }"
+        >
+          <div class="resultado-header">
+            <div [class]="obtenerClaseEstado(cajero.total || 0)">
+              <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+
+            <div>
+              <h2 class="resultado-titulo">Cajero #{{ cajero.idCajero }}</h2>
+
+              <span
+                class="estado-badge"
+                [ngClass]="{
+                  'estado-ok': cajero.total >= 5000,
+                  'estado-warning': cajero.total > 0 && cajero.total < 5000,
+                  'estado-error': cajero.total <= 0,
+                }"
+              >
+                {{ obtenerEstado(cajero.total) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="comprobante">
+            <div class="comprobante-row">
+              <span class="comp-label">
+                <i class="fa-solid fa-location-dot"></i>
+                Ubicación
+              </span>
+
+              <span class="comp-value">
+                {{ cajero.ubicacion || 'Sin ubicación' }}
+              </span>
+            </div>
+
+            <div class="comprobante-row">
+              <span class="comp-label">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                Disponible
+              </span>
+
+              <span class="comp-value efectivo"> ${{ cajero.total | number }} </span>
+            </div>
+          </div>
+
+          <button class="btn-eliminar" (click)="eliminarCajero(cajero.idCajero, $event)">
+            <i class="fa-solid fa-trash"></i>
+            Eliminar
+          </button>
+        </div>
+      </div>
+
+      <!-- VACIO -->
+
+      <div *ngIf="!cargando && cajeros.length === 0" class="atm-screen atm-screen--center">
+        <div style="font-size: 2rem; margin-bottom: 10px; color: #7f8c8d">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+
+        <h2 class="screen-title">No hay cajeros disponibles</h2>
+      </div>
+
+      <!-- FOOTER -->
+
+      <div class="atm-footer">
+        <span>
+          <i class="fa-solid fa-microchip"></i>
+          ATM SYSTEM
+        </span>
+
+        <span>•</span>
+
+        <span>Monitor de Cajeros</span>
+      </div>
+    </div>
   </div>
 </div>

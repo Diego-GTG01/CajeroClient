@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #e0e5ec;
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,29 +16,79 @@ body {
 
 .atm-shell {
   padding: 20px;
-  background: #e0e5ec;
+  background: #fff;
   min-height: 100vh;
   color: rgb(0, 0, 0);
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .atm-header {
-  background: #1a3a5c;
+  background: linear-gradient(135deg, #1a3a5c, #244a73);
   color: white;
-  padding: 15px 20px;
+  padding: 18px 24px;
+  border-radius: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  border-radius: 15px;
+  margin-bottom: 20px;
+
+  box-shadow:
+    0 8px 20px rgba(26, 58, 92, 0.2),
+    inset 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .atm-logo {
   display: flex;
   align-items: center;
+  gap: 15px;
+}
+.atm-logo-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  backdrop-filter: blur(5px);
+}
+
+.atm-brand h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.atm-brand span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.atm-status {
+  display: flex;
+  align-items: center;
   gap: 8px;
-  font-weight: bold;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.atm-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+
+  box-shadow: 0 0 10px #22c55e;
 }
 
 .atm-logo-icon {
@@ -572,4 +622,122 @@ body {
 
 .atm-vacio:hover {
   box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+}
+
+/* RESUMEN */
+
+.dashboard-resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 20px;
+}
+
+.resumen-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 18px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.resumen-card span {
+  display: block;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.resumen-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 24px;
+  color: #1a3a5c;
+}
+
+/* ACCIONES */
+
+.acciones-bar {
+  display: flex;
+  gap: 12px;
+  margin: 0 20px 20px;
+}
+
+.acciones-bar .btn-confirmar {
+  flex: 1;
+}
+
+.btn-secundario {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+/* ESTADOS */
+
+.estado-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.estado-ok {
+  background: rgba(46, 204, 113, 0.15);
+  color: #16a34a;
+}
+
+.estado-warning {
+  background: rgba(243, 156, 18, 0.15);
+  color: #d97706;
+}
+
+.estado-error {
+  background: rgba(231, 76, 60, 0.15);
+  color: #dc2626;
+}
+
+/* EFECTIVO */
+
+.efectivo {
+  font-size: 18px;
+  color: #16a34a;
+}
+
+/* TARJETAS */
+
+.atm-card {
+  transition: all 0.25s ease;
+}
+
+.atm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .acciones-bar {
+    flex-direction: column;
+  }
+}
+
+.app-background {
+  min-height: 100vh;
+  padding: 30px;
+  background: #b2dafa;
+}
+
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.8),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+
+  overflow: hidden;
 }

@@ -5,8 +5,8 @@ export interface Cuenta {
 
     idCuenta: number;
     usuario: Usuario;
-    banco: Banco;
-    NumCuenta: string;
+    banco?: Banco;
+    NumCuenta: number;
     saldo: number;
     
 }

@@ -99,7 +99,7 @@ export class RetiroComponent implements OnInit {
           confirmButtonText: 'Reintentar',
           confirmButtonColor: '#3085d6',
         }).then(() => {
-          this.router.navigate(['/'])
+          this.router.navigate(['/']);
         });
       },
     });
@@ -123,7 +123,7 @@ export class RetiroComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       reverseButtons: true,
     }).then((result) => {
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
     });
   }
 
@@ -184,7 +184,7 @@ export class RetiroComponent implements OnInit {
   }
 
   private procesarRetiro(): void {
-    this.cliente.saldo -= this.monto ?? 0;
+    console.log('Iniciando proceso de retiro para monto:', this.monto);
     const transaccion: Transaccion = {
       tarjeta: {
         idTarjeta: 0,
@@ -217,7 +217,9 @@ export class RetiroComponent implements OnInit {
             title: '¡Retiro exitoso!',
             text: 'Por favor, tome su dinero del dispensador.',
             confirmButtonColor: '#28a745',
-          }).then();
+          }).then(() => {
+            this.cliente.saldo -= this.monto ?? 0;
+          });
         } else {
           this.mensajeError = result.message ?? 'Error desconocido';
           this.estado = 'error';

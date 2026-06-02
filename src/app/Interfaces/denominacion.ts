@@ -1,5 +1,5 @@
 export interface Denominacion {
-    idDenominacion: number;
-    tipo: string;
-    denominacion: number;
+  idDenominacion: number;
+  tipo: string;
+  denominacion: number;
 }

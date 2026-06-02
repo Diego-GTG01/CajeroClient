@@ -15,7 +15,7 @@ export class UsuarioService {
   getDatosClientePorTarjeta(numTarjeta: string, token: string): Observable<DatosCliente> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
-    }); 
+    });
 
     return this.http.get<Result<SaldoInfo>>(`${this.url}/saldo/${numTarjeta}`, { headers }).pipe(
       map((result) => {
@@ -32,5 +32,9 @@ export class UsuarioService {
         } satisfies DatosCliente;
       }),
     );
+  }
+
+  createCliente(request: Record<string, any>): Observable<Result<any>> {
+    return this.http.post<Result<any>>(`${this.url}/create`, request);
   }
 }

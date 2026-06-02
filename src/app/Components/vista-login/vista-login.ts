@@ -73,6 +73,7 @@ export class VistaLogin {
     this.authService.auth(datosAuth).subscribe({
       next: (result: any) => {
         if (result && result.token) {
+          localStorage.clear();
           localStorage.setItem('token', result.token);
           localStorage.setItem('numTarjeta', result.numTarjeta);
           if (this.cajero) {

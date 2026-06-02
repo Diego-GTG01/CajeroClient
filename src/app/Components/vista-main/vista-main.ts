@@ -134,9 +134,9 @@ export class VistaMain implements OnInit {
           idCajero: 0,
           ubicacion: result.value.ubicacion,
           total: 0,
-          estado: 'Activo'
+          estado: 'Activo',
         };
-        console.log(nuevoCajero)
+        console.log(nuevoCajero);
 
         this.cajeroService.addCajero(nuevoCajero).subscribe({
           next: () => {
@@ -144,12 +144,16 @@ export class VistaMain implements OnInit {
             this.cargarCajeros();
           },
           error: (err) => {
-            console.warn(err)
+            console.warn(err);
             Swal.fire('Error', 'No se pudo agregar el cajero', 'error');
           },
         });
       }
     });
+  }
+
+  agregarUsuario(): void {
+    this.router.navigate(['/users']);
   }
 
   eliminarCajero(id: number, event: Event): void {
@@ -171,11 +175,15 @@ export class VistaMain implements OnInit {
             Swal.fire('Eliminado', 'El cajero fue eliminado', 'success');
             this.cargarCajeros();
           },
-          error: () => {
+          error: (err) => {
+            console.warn(err);
             Swal.fire('Error', 'No se pudo eliminar el cajero', 'error');
           },
         });
       }
     });
+  }
+  get totalSistema(): number {
+    return this.cajeros.reduce((total, cajero) => total + (cajero.total || 0), 0);
   }
 }
