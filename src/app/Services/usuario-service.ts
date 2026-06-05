@@ -9,7 +9,7 @@ import { DatosCliente } from '../Components/retiro-component/retiro-component';
   providedIn: 'root',
 })
 export class UsuarioService {
-  private url = 'http://localhost:8080/usuario';
+  private url = 'http://192.167.0.168:8080/usuario';
   private http = inject(HttpClient);
 
   getDatosClientePorTarjeta(numTarjeta: string, token: string): Observable<DatosCliente> {
@@ -25,6 +25,7 @@ export class UsuarioService {
         }
         const info = result.object as SaldoInfo;
         return {
+          idUsuario: info.idUsuario, 
           nombre: info.nombreUsuario,
           rango: info.rango,
           saldo: info.saldo,
