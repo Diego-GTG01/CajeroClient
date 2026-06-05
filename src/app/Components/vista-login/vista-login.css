@@ -1,7 +1,6 @@
 .login-container {
   width: 100%;
   height: 100%;
-  margin: 80px auto;
   padding: 25px;
   border-radius: 10px;
   background: #f5f5f5;
@@ -46,8 +45,7 @@ button:hover {
 
 /* Contenedor principal centrado en la pantalla */
 .login-container {
-  max-width: 400px;
-  margin: 50px auto;
+  max-width: 100%;
   padding: 30px;
   background-color: #ffffff;
   border-radius: 12px;
@@ -173,8 +171,7 @@ button[type='submit']:active {
 /* --- ESTILOS GENERALES Y SOPORTE --- */
 
 .login-container {
-  max-width: 400px;
-  margin: 50px auto;
+  max-width: 100%;
   padding: 30px;
   background-color: #ffffff;
   border-radius: 12px;
@@ -280,8 +277,8 @@ button[type='submit']:disabled {
 
 /* --- CONTENEDOR PRINCIPAL --- */
 .login-container {
-  max-width: 400px;
-  margin: 60px auto;
+  max-width: 100%;
+  min-height: 100%;
   padding: 35px;
 
   background: #b2dafa;
@@ -478,23 +475,169 @@ button[type='submit']:disabled {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 8px;
 }
+/* ==========================
+   FONDO GENERAL
+========================== */
 .app-background {
   min-height: 100vh;
-  padding: 150px;
+  padding: 20px;
   background: #b2dafa;
+  border-radius: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* ==========================
+   TARJETA PRINCIPAL
+========================== */
 .app-container {
-  max-width: 500px;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  max-width: 550px;
+  max-height: 90vh;
 
-  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  background: #ffffff;
 
   border-radius: 24px;
 
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.8),
+    0 10px 30px rgba(0, 0, 0, 0.15),
     0 1px 2px rgba(0, 0, 0, 0.05);
 
   overflow: hidden;
+}
+
+/* ==========================
+   LOGIN
+========================== */
+.login-container {
+  width: 100%;
+  padding: 35px;
+  box-sizing: border-box;
+}
+
+/* ==========================
+   BOTONES
+========================== */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  flex: 1;
+}
+
+/* ==========================
+   TABLETS
+========================== */
+@media (max-width: 768px) {
+  .app-background {
+    padding: 15px;
+  }
+
+  .login-container {
+    padding: 25px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .campo input {
+    padding: 11px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ==========================
+   CELULARES
+========================== */
+@media (max-width: 480px) {
+  .app-background {
+    padding: 10px;
+  }
+
+  .app-container {
+    border-radius: 16px;
+  }
+
+  .login-container {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+  }
+
+  .cajero-header h3 {
+    font-size: 0.85rem;
+  }
+
+  .cajero-ubi {
+    font-size: 0.75rem;
+  }
+
+  .campo label {
+    font-size: 0.8rem;
+  }
+
+  .campo input {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .error-msg {
+    font-size: 0.75rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .btn-volver,
+  button[type='submit'] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+/* Estilos base y responsivos para SweetAlert2 */
+.swal-responsive-popup {
+  width: 90% !important; /* Evita que choque con los bordes de la pantalla en móviles */
+  max-width: 450px !important; /* Mantiene un tamaño limpio en escritorio */
+  border-radius: 16px !important;
+  padding: 20px !important;
+}
+
+.swal-responsive-title {
+  font-size: 20px !important;
+  color: #1a3a5c !important; /* Combinando con tu paleta del sistema */
+}
+
+/* Ajustes específicos para móviles */
+@media (max-width: 480px) {
+  .swal-responsive-popup {
+    padding: 16px !important;
+  }
+
+  .swal-responsive-title {
+    font-size: 18px !important;
+  }
+
+  /* Hace que los botones de Confirmar y Cancelar se apilen en vertical */
+  .swal-responsive-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .swal-responsive-btn {
+    width: 100% !important; /* Botones a lo ancho completo en móvil */
+    margin: 0 !important; /* Quita los márgenes laterales por defecto */
+    padding: 12px !important;
+    font-size: 14px !important;
+  }
 }

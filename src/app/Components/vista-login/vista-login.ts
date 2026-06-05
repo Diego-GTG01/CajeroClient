@@ -23,7 +23,7 @@ export class VistaLogin {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private location: Location 
+    private location: Location,
   ) {
     localStorage.clear();
     const navigation = this.router.getCurrentNavigation();
@@ -52,7 +52,14 @@ export class VistaLogin {
         icon: 'warning',
         title: 'Campos incompletos',
         text: 'Por favor, ingresa tu número de tarjeta y PIN.',
-        confirmButtonColor: '#3085d6'
+        confirmButtonColor: '#3085d6',
+        customClass: {
+          popup: 'swal-responsive-popup',
+          title: 'swal-responsive-title',
+          actions: 'swal-responsive-actions',
+          confirmButton: 'swal-responsive-btn',
+          cancelButton: 'swal-responsive-btn',
+        },
       });
       return;
     }
@@ -60,9 +67,16 @@ export class VistaLogin {
       title: 'Verificando credenciales',
       text: 'Por favor espere...',
       allowOutsideClick: false,
+      customClass: {
+        popup: 'swal-responsive-popup',
+        title: 'swal-responsive-title',
+        actions: 'swal-responsive-actions',
+        confirmButton: 'swal-responsive-btn',
+        cancelButton: 'swal-responsive-btn',
+      },
       didOpen: () => {
         Swal.showLoading();
-      }
+      },
     });
 
     const datosAuth = {
@@ -85,18 +99,31 @@ export class VistaLogin {
             title: '¡Acceso correcto!',
             text: 'Bienvenido al sistema.',
             timer: 1500,
-            showConfirmButton: false
+            showConfirmButton: false,
+            customClass: {
+              popup: 'swal-responsive-popup',
+              title: 'swal-responsive-title',
+              actions: 'swal-responsive-actions',
+              confirmButton: 'swal-responsive-btn',
+              cancelButton: 'swal-responsive-btn',
+            },
           }).then(() => {
             this.router.navigate(['/retiro']);
           });
-
         } else {
           console.warn('El servidor no devolvió un token válido.');
           Swal.fire({
             icon: 'error',
             title: 'Error de autenticación',
             text: 'No se pudo validar la sesión. Intente de nuevo.',
-            confirmButtonColor: '#d33'
+            confirmButtonColor: '#d33',
+            customClass: {
+              popup: 'swal-responsive-popup',
+              title: 'swal-responsive-title',
+              actions: 'swal-responsive-actions',
+              confirmButton: 'swal-responsive-btn',
+              cancelButton: 'swal-responsive-btn',
+            },
           });
         }
       },
@@ -106,7 +133,14 @@ export class VistaLogin {
           icon: 'error',
           title: 'Error',
           text: 'Número de tarjeta o PIN incorrectos, o problemas de conexión.',
-          confirmButtonColor: '#d33'
+          confirmButtonColor: '#d33',
+          customClass: {
+            popup: 'swal-responsive-popup',
+            title: 'swal-responsive-title',
+            actions: 'swal-responsive-actions',
+            confirmButton: 'swal-responsive-btn',
+            cancelButton: 'swal-responsive-btn',
+          },
         });
       },
     });
