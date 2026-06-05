@@ -1,3 +1,4 @@
+/* ── BASE & UTILITIES ───────────────────────────────────────────────────── */
 * {
   margin: 0;
   padding: 0;
@@ -14,18 +15,54 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.atm-shell {
-  max-width: 750px;
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fdfdfd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.app-background {
+  min-height: 100vh;
+  padding: 15px;
+  background: #b2dafa;
+  border-radius: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
   width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* ── ATM SHELL & HEADERS ────────────────────────────────────────────────── */
+.atm-shell {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
   background: #f5f7fa;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin: 80px auto;
-  padding: 25px;
-  border-radius: 10px;
-  background: #f5f5f5;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .atm-header {
@@ -66,6 +103,18 @@ body {
   display: inline-block;
 }
 
+.atm-footer {
+  background: #e0e5ec;
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ── CLIENT CARD ────────────────────────────────────────────────────────── */
 .cliente-card {
   background: white;
   margin-top: 20px;
@@ -123,6 +172,7 @@ body {
   color: #2ecc71;
 }
 
+/* ── ATM SCREEN & CONTEXT ───────────────────────────────────────────────── */
 .atm-screen {
   background: white;
   margin-top: 20px;
@@ -169,6 +219,35 @@ body {
 .context-value {
   font-family: monospace;
   font-weight: bold;
+}
+
+/* ── FORMS & INPUTS ─────────────────────────────────────────────────────── */
+.form-group {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+input,
+select {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #007bff;
 }
 
 .monto-group {
@@ -224,6 +303,22 @@ body {
   padding-left: 10px;
 }
 
+.error,
+.error-mensaje {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.error-mensaje {
+  background: #fee;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+  color: #e74c3c;
+}
+
+/* ── BUTTONS & FAST RECHARGE ────────────────────────────────────────────── */
 .montos-rapidos {
   margin-bottom: 25px;
 }
@@ -267,7 +362,7 @@ body {
 
 .btn-confirmar {
   width: 100%;
-  background:  #22c55e;
+  background: #22c55e;
   color: white;
   border: none;
   padding: 14px;
@@ -279,9 +374,8 @@ body {
 }
 
 .btn-confirmar:hover:not(:disabled) {
-  background: #22c55e;
-  padding: 25px;
-
+  transform: translateY(-2px);
+  opacity: 0.95;
 }
 
 .btn-confirmar:disabled {
@@ -289,20 +383,74 @@ body {
   cursor: not-allowed;
 }
 
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f0f2f5;
-  border-top-color: #1a3a5c;
-  border-radius: 50%;
-  animation: girar 0.8s linear infinite;
-  margin: 0 auto 20px;
+.btn-submit {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
 }
 
-@keyframes girar {
-  to {
-    transform: rotate(360deg);
-  }
+.btn-submit:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.btn-submit:not(:disabled):hover {
+  background-color: #218838;
+}
+
+.btn-nuevo {
+  width: 100%;
+  background: #f0f2f5;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn-nuevo:hover {
+  background: #e0e5ec;
+}
+
+.btn-volver {
+  width: 100%;
+  padding: 14px;
+  background-color: #aaa;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-volver:hover {
+  background-color: #e74c3c;
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* ── HEADINGS & TEXTS ───────────────────────────────────────────────────── */
+h2,
+h3 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .procesando-text {
@@ -315,6 +463,136 @@ body {
   color: #666;
 }
 
+/* ── TABS SYSTEM ────────────────────────────────────────────────────────── */
+.tabs-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  padding: 0 20px 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #1a3a5c;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tab-btn:hover {
+  transform: translateY(-2px);
+  background: #e2e8f0;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #1a3a5c, #244a73);
+  color: white;
+  box-shadow: 0 4px 12px rgba(26, 58, 92, 0.3);
+}
+
+/* ── CREDIT CARDS GRID ──────────────────────────────────────────────────── */
+.tarjetas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.tarjeta-bancaria {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #892222 0%, #e61010 50%, #fa0000 100%);
+  color: white;
+  border-radius: 20px;
+  padding: 24px;
+  min-height: 220px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.tarjeta-bancaria:hover {
+  transform: translateY(-5px);
+}
+
+.tarjeta-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tarjeta-banco {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.tarjeta-header i {
+  font-size: 28px;
+}
+
+.tarjeta-chip {
+  width: 55px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 25px 0;
+  background: linear-gradient(135deg, #fbbf24, #fde68a);
+}
+
+.tarjeta-numero {
+  font-size: 22px;
+  letter-spacing: 3px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.tarjeta-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.tarjeta-footer small {
+  display: block;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.tarjeta-footer strong {
+  font-size: 18px;
+}
+
+.tarjeta-status {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tarjeta-bancaria::before {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  top: -60px;
+  right: -60px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tarjeta-bancaria::after {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  bottom: -40px;
+  left: -40px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ── RECIPIENT / LABELS OVERLAYS ────────────────────────────────────────── */
 .resultado-header {
   display: flex;
   align-items: center;
@@ -403,61 +681,57 @@ body {
   background: #f0f2f5;
 }
 
-.btn-nuevo {
-  width: 100%;
-  background: #f0f2f5;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
+/* ── ANIMATIONS ─────────────────────────────────────────────────────────── */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f0f2f5;
+  border-top-color: #1a3a5c;
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+  margin: 0 auto 20px;
 }
 
-.btn-nuevo:hover {
-  background: #e0e5ec;
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.error-mensaje {
-  background: #fee;
-  padding: 12px;
-  border-radius: 8px;
-  margin: 15px 0;
-  color: #e74c3c;
-}
+/* ── RESPONSIVE DESIGN (MEDIA QUERIES) ──────────────────────────────────── */
 
-.atm-footer {
-  background: #e0e5ec;
-  padding: 12px;
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* ── Responsivo ─────────────────────────────────────────────────────────── */
-@media (max-width: 500px) {
+/* Tablets y pantallas medianas (768px o menos) */
+@media (max-width: 768px) {
   body {
-    padding: 10px;
+    padding: 15px;
+  }
+
+  .container {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .atm-shell {
+    padding: 15px;
+  }
+
+  .screen-title {
+    font-size: 1.2rem;
   }
 
   .cliente-card-inner {
     flex-direction: column;
     text-align: center;
+    gap: 10px;
   }
 
   .context-row {
     flex-direction: column;
+    gap: 12px;
   }
 
   .context-divider {
     display: none;
-  }
-
-  .montos-rapidos-grid {
-    justify-content: center;
   }
 
   .resultado-header {
@@ -465,58 +739,120 @@ body {
     text-align: center;
   }
 
-  .screen-title {
-    font-size: 18px;
+  .tabs-container {
+    flex-direction: column;
+    padding: 0 5px 15px;
   }
 
-  .monto-input {
-    font-size: 20px;
+  .tab-btn {
+    width: 100%;
+    text-align: center;
   }
 
-  .monto-currency {
-    font-size: 20px;
+  .tarjetas-grid {
+    grid-template-columns: 1fr; /* Una sola tarjeta por fila en móviles */
+    gap: 15px;
   }
 }
 
+/* Teléfonos móviles estándar (500px o menos) */
+@media (max-width: 500px) {
+  body {
+    padding: 10px;
+  }
+
+  .app-background {
+    padding: 8px;
+  }
+
+  .app-container {
+    border-radius: 16px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .montos-rapidos-grid {
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Botones rápidos en 2 columnas equilibradas */
+    gap: 8px;
+  }
+
+  .btn-rapido {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .monto-input,
+  .monto-currency {
+    font-size: 20px;
+  }
+
+  .tarjeta-bancaria {
+    padding: 18px;
+    min-height: 190px;
+  }
+
+  .tarjeta-banco {
+    font-size: 22px;
+  }
+
+  .tarjeta-numero {
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin: 15px 0;
+  }
+
+  .tarjeta-chip {
+    width: 45px;
+    height: 32px;
+    margin: 15px 0;
+  }
+  
+  .tarjeta-footer {
+    font-size: 14px;
+  }
+  
+  .tarjeta-footer strong {
+    font-size: 14px;
+  }
+}
+
+/* Teléfonos pequeños (380px o menos) */
 @media (max-width: 380px) {
   .atm-header {
     flex-direction: column;
     text-align: center;
+    padding: 12px;
+  }
+
+  .montos-rapidos-grid {
+    grid-template-columns: 1fr; /* Una sola columna para pantallas extremadamente pequeñas */
   }
 
   .btn-rapido {
-    padding: 6px 12px;
+    padding: 8px;
     font-size: 12px;
   }
 
   .denominaciones-tabla {
-    font-size: 12px;
+    font-size: 11px;
   }
-}
-.btn-volver {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 20px;
-  background-color: #aaa;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 8px;
-}
-.btn-volver:hover {
-  width: 100%;
-  padding: 25px;
-  background-color: #e74c3c;
-  color: white;
-  border: 12px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 8px;
+
+  .cliente-nombre {
+    font-size: 16px;
+  }
+
+  .cliente-saldo-valor {
+    font-size: 18px;
+  }
 }

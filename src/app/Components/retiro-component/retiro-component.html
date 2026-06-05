@@ -1,198 +1,475 @@
-<div class="atm-shell">
-  <header class="atm-header">
-    <div class="atm-logo">
-      <span class="atm-logo-icon"><i class="fa-solid fa-trident"></i></span>
-      <span class="atm-logo-text">BANCA DIGITAL</span>
-    </div>
-    <div class="atm-session">
-      <span class="atm-session-dot"></span>
-      <span><i class="fa-solid fa-user-shield"></i> Sesión activa</span>
-    </div>
-  </header>
+<div class="app-background">
+  <div class="app-container">
+    <div class="atm-shell">
+      <header class="atm-header">
+        <div class="atm-logo">
+          <span class="atm-logo-icon"><i class="fa-solid fa-trident"></i></span>
+          <span class="atm-logo-text">BANCA DIGITAL</span>
+        </div>
+        <div class="atm-session">
+          <span class="atm-session-dot"></span>
+          <span><i class="fa-solid fa-user-shield"></i> Sesión activa</span>
+        </div>
+      </header>
+      <!-- NAVEGACIÓN -->
+      <div class="tabs-container">
+        <button
+          class="tab-btn"
+          [class.active]="tabActiva === 'retiro'"
+          (click)="tabActiva = 'retiro'"
+        >
+          <i class="fa-solid fa-money-bill-wave"></i>
+          Retiro
+        </button>
 
-  <main class="atm-screen atm-screen--center" *ngIf="estado === 'cargando'">
-    <div class="spinner">
-      <div class="spinner-ring"></div>
-      <div class="spinner-ring spinner-ring--2"></div>
-    </div>
-    <p class="procesando-text"><i class="fa-solid fa-credit-card fa-pulse"></i> LEYENDO TARJETA…</p>
-    <p class="procesando-sub">Obteniendo datos de su cuenta.</p>
-  </main>
+        <button
+          class="tab-btn"
+          [class.active]="tabActiva === 'tarjetas'"
+          (click)="tabActiva = 'tarjetas'"
+        >
+          <i class="fa-solid fa-credit-card"></i>
+          Tarjetas
+        </button>
 
-  <ng-container *ngIf="estado !== 'cargando' && !errorCarga">
-    <section class="cliente-card" [class]="rangoClass">
-      <div class="cliente-card-inner">
-        <div class="cliente-info">
-          <p class="cliente-label">TITULAR</p>
-          <h2 class="cliente-nombre">
-            <i class="fa-solid fa-user"></i> {{ cliente.nombre | uppercase }}
-          </h2>
-          <span class="cliente-rango-badge">
-            <i class="fa-solid fa-gem"></i> {{ cliente.rango }}
+        <button
+          class="tab-btn"
+          [class.active]="tabActiva === 'agregar-tarjeta'"
+          (click)="tabActiva = 'agregar-tarjeta'"
+        >
+          <i class="fa-solid fa-plus"></i>
+          Agregar Tarjeta
+        </button>
+      </div>
+
+      <main class="atm-screen atm-screen--center" *ngIf="estado === 'cargando'">
+        <div class="spinner">
+          <div class="spinner-ring"></div>
+          <div class="spinner-ring spinner-ring--2"></div>
+        </div>
+        <p class="procesando-text">
+          <i class="fa-solid fa-credit-card fa-pulse"></i> LEYENDO TARJETA…
+        </p>
+        <p class="procesando-sub">Obteniendo datos de su cuenta.</p>
+      </main>
+      <div *ngIf="tabActiva === 'retiro'">
+        <ng-container *ngIf="estado !== 'cargando' && !errorCarga">
+          <section class="cliente-card" [class]="rangoClass">
+            <div class="cliente-card-inner">
+              <div class="cliente-info">
+                <p class="cliente-label">TITULAR</p>
+                <h2 class="cliente-nombre">
+                  <i class="fa-solid fa-user"></i> {{ cliente.nombre | uppercase }}
+                </h2>
+                <span class="cliente-rango-badge">
+                  <i class="fa-solid fa-gem"></i> {{ cliente.rango }}
+                </span>
+              </div>
+              <div class="cliente-saldo">
+                <p class="cliente-label">SALDO DISPONIBLE</p>
+                <p class="cliente-saldo-valor">
+                  {{ cliente.saldo | currency: 'MXN' : 'symbol' : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+            <div class="card-chip"></div>
+            <div class="card-wave"></div>
+          </section>
+
+          <main class="atm-screen" *ngIf="estado === 'formulario'">
+            <h3 class="screen-title">
+              <i class="fa-solid fa-money-bill-transfer"></i> RETIRO DE EFECTIVO
+            </h3>
+
+            <div class="context-row">
+              <div class="context-item">
+                <span class="context-label"><i class="fa-solid fa-credit-card"></i> TARJETA: </span>
+                <span class="context-value">****{{ numTarjeta.toString().slice(-4) }}</span>
+              </div>
+              <div class="context-divider"></div>
+              <div class="context-item">
+                <span class="context-label"><i class="fa-solid fa-atm"></i> CAJERO: </span>
+                <span class="context-value">#{{ idCajero }}</span>
+              </div>
+            </div>
+
+            <div class="monto-group">
+              <label class="monto-label" for="monto">INGRESA EL MONTO A RETIRAR</label>
+              <div class="monto-input-wrap" [class.invalid]="monto !== null && !montoValido">
+                <span class="monto-currency">$</span>
+                <input
+                  id="monto"
+                  class="monto-input"
+                  type="number"
+                  [(ngModel)]="monto"
+                  (change)="redondearMonto()"
+                  placeholder="0"
+                  min="0.5"
+                  step="0.5"
+                  autocomplete="off"
+                />
+                <span class="monto-currency-code">MXN</span>
+              </div>
+
+              <p class="monto-hint" *ngIf="monto !== null && monto <= 0">
+                <i class="fa-solid fa-circle-exclamation"></i> El monto debe ser mayor a $0.
+              </p>
+              <p class="monto-hint" *ngIf="monto !== null && monto > cliente.saldo">
+                <i class="fa-solid fa-triangle-exclamation"></i> Saldo insuficiente.
+              </p>
+              <p class="monto-hint" *ngIf="monto !== null && (monto * 2) % 1 !== 0">
+                <i class="fa-solid fa-circle-info"></i> Solo se permiten cantidades con centavos de
+                $0.00 o $0.50.
+              </p>
+            </div>
+
+            <div class="montos-rapidos">
+              <p class="montos-rapidos-label"><i class="fa-solid fa-bolt"></i> MONTOS RÁPIDOS</p>
+              <div class="montos-rapidos-grid">
+                <button
+                  class="btn-rapido"
+                  *ngFor="let m of [200, 500, 1000, 2000, 5000, 10000]"
+                  [class.active]="monto === m"
+                  [disabled]="m > cliente.saldo"
+                  (click)="monto = m"
+                >
+                  <i
+                    class="fa-solid fa-money-bill-wave"
+                    style="font-size: 0.8rem; margin-right: 4px"
+                  ></i>
+                  ${{ m | number }}
+                </button>
+              </div>
+            </div>
+
+            <button class="btn-confirmar" [disabled]="!montoValido" (click)="confirmarRetiro()">
+              CONFIRMAR RETIRO <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
+            </button>
+
+            <button type="button" class="btn-volver" (click)="volver()">
+              <i class="fa-solid fa-power-off"></i> CERRAR SESIÓN
+            </button>
+          </main>
+
+          <main class="atm-screen atm-screen--center" *ngIf="estado === 'procesando'">
+            <div class="spinner">
+              <div class="spinner-ring"></div>
+              <div class="spinner-ring spinner-ring--2"></div>
+            </div>
+            <p class="procesando-text">
+              <i class="fa-solid fa-vault fa-spin"></i> PROCESANDO TRANSACCIÓN…
+            </p>
+            <p class="procesando-sub">Por favor no retire su tarjeta.</p>
+          </main>
+
+          <main class="atm-screen" *ngIf="estado === 'exito'">
+            <div class="resultado-header">
+              <span class="resultado-icon resultado-icon--ok"
+                ><i class="fa-solid fa-circle-check"></i
+              ></span>
+              <h3 class="resultado-titulo">RETIRO EXITOSO</h3>
+            </div>
+
+            <div class="comprobante" *ngIf="resultados.length > 0">
+              <div class="comprobante-row">
+                <span class="comp-label"><i class="fa-solid fa-hashtag"></i> FOLIO</span>
+                <span class="comp-value">{{ resultados[0].folio }}</span>
+              </div>
+              <div class="comprobante-row">
+                <span class="comp-label"><i class="fa-solid fa-user"></i> TITULAR</span>
+                <span class="comp-value">{{ resultados[0].usuario }}</span>
+              </div>
+              <div class="comprobante-row">
+                <span class="comp-label"><i class="fa-solid fa-address-card"></i> CUENTA</span>
+                <span class="comp-value">{{ resultados[0].NumCuenta }}</span>
+              </div>
+              <div class="comprobante-row">
+                <span class="comp-label"
+                  ><i class="fa-solid fa-credit-card"></i> TARJETA USADA</span
+                >
+                <span class="comp-value">**** {{ resultados[0].NumTarjeta | slice: -4 }}</span>
+              </div>
+              <div class="comprobante-row">
+                <span class="comp-label"><i class="fa-solid fa-circle-info"></i> ESTATUS</span>
+                <span class="comp-value comp-status">{{ resultados[0].Status }}</span>
+              </div>
+            </div>
+
+            <div class="denominaciones" *ngIf="resultados.length > 0">
+              <p class="denominaciones-titulo">
+                <i class="fa-solid fa-receipt"></i> DESGLOSE DE EFECTIVO
+              </p>
+              <table class="denominaciones-tabla">
+                <thead>
+                  <tr>
+                    <th><i class="fa-solid fa-coins"></i> Tipo</th>
+                    <th>Denominación</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let r of resultados">
+                    <td>
+                      <i
+                        [class]="
+                          r.tipo === 'Billete' ? 'fa-solid fa-money-bill' : 'fa-solid fa-circle-dot'
+                        "
+                      ></i>
+                      {{ r.tipo }}
+                    </td>
+                    <td>${{ r.denominacion }}</td>
+                    <td>{{ r.cantidad }}</td>
+                    <td>{{ r.subtotal | currency: 'MXN' : 'symbol' : '1.2-2' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button class="btn-nuevo" (click)="reiniciar()">
+              <i class="fa-solid fa-rotate-left"></i> NUEVA OPERACIÓN
+            </button>
+          </main>
+        </ng-container>
+      </div>
+
+      <div *ngIf="tabActiva === 'tarjetas'" class="atm-screen">
+        <h2
+          class="screen-title"
+          style="display: flex; justify-content: space-between; align-items: center"
+        >
+          <span>
+            <i class="fa-solid fa-credit-card"></i>
+            Mis Tarjetas
           </span>
-        </div>
-        <div class="cliente-saldo">
-          <p class="cliente-label">SALDO DISPONIBLE</p>
-          <p class="cliente-saldo-valor">
-            {{ cliente.saldo | currency: 'MXN' : 'symbol' : '1.2-2' }}
-          </p>
-        </div>
-      </div>
-      <div class="card-chip"></div>
-      <div class="card-wave"></div>
-    </section>
 
-    <main class="atm-screen" *ngIf="estado === 'formulario'">
-      <h3 class="screen-title"><i class="fa-solid fa-money-bill-transfer"></i> RETIRO DE EFECTIVO</h3>
-
-      <div class="context-row">
-        <div class="context-item">
-          <span class="context-label"><i class="fa-solid fa-credit-card"></i> TARJETA: </span>
-          <span class="context-value">****{{ numTarjeta.toString().slice(-4) }}</span>
-        </div>
-        <div class="context-divider"></div>
-        <div class="context-item">
-          <span class="context-label"><i class="fa-solid fa-atm"></i> CAJERO: </span>
-          <span class="context-value">#{{ idCajero }}</span>
-        </div>
-      </div>
-
-      <div class="monto-group">
-        <label class="monto-label" for="monto">INGRESA EL MONTO A RETIRAR</label>
-        <div class="monto-input-wrap" [class.invalid]="monto !== null && !montoValido">
-          <span class="monto-currency">$</span>
-          <input
-            id="monto"
-            class="monto-input"
-            type="number"
-            [(ngModel)]="monto"
-            (change)="redondearMonto()"
-            placeholder="0"
-            min="0.5"
-            step="0.5"
-            autocomplete="off"
-          />
-          <span class="monto-currency-code">MXN</span>
-        </div>
-
-        <p class="monto-hint" *ngIf="monto !== null && monto <= 0">
-          <i class="fa-solid fa-circle-exclamation"></i> El monto debe ser mayor a $0.
-        </p>
-        <p class="monto-hint" *ngIf="monto !== null && monto > cliente.saldo">
-          <i class="fa-solid fa-triangle-exclamation"></i> Saldo insuficiente.
-        </p>
-        <p class="monto-hint" *ngIf="monto !== null && (monto * 2) % 1 !== 0">
-          <i class="fa-solid fa-circle-info"></i> Solo se permiten cantidades con centavos de $0.00 o $0.50.
-        </p>
-      </div>
-
-      <div class="montos-rapidos">
-        <p class="montos-rapidos-label"><i class="fa-solid fa-bolt"></i> MONTOS RÁPIDOS</p>
-        <div class="montos-rapidos-grid">
           <button
-            class="btn-rapido"
-            *ngFor="let m of [200, 500, 1000, 2000, 5000, 10000]"
-            [class.active]="monto === m"
-            [disabled]="m > cliente.saldo"
-            (click)="monto = m"
+            (click)="verDatos = !verDatos"
+            class="btn-mostrar-datos"
+            style="
+              background: none;
+              border: none;
+              cursor: pointer;
+              font-size: 1.2rem;
+              color: #64748b;
+            "
           >
-            <i class="fa-solid fa-money-bill-wave" style="font-size: 0.8rem; margin-right: 4px;"></i> ${{ m | number }}
+            <i class="fa-solid" [ngClass]="verDatos ? 'fa-eye-slash' : 'fa-eye'"></i>
+            <span style="font-size: 0.9rem; margin-left: 5px; font-family: inherit">
+              {{ verDatos ? 'Ocultar datos' : 'Ver datos' }}
+            </span>
           </button>
+        </h2>
+
+        <div *ngIf="(tarjetas?.length ?? 0) > 0; else sinTarjetas" class="tarjetas-grid">
+          <div
+            class="tarjeta-bancaria"
+            style="position: relative"
+            [ngStyle]="{
+              background:
+                tarjeta.rango?.nombre === 'Premium'
+                  ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                  : '',
+            }"
+            *ngFor="let tarjeta of tarjetas"
+          >
+            <div class="tarjeta-header">
+              <span class="tarjeta-banco">
+                {{ tarjeta.banco?.nombre || 'Banco' }}
+              </span>
+              <button
+                (click)="eliminarTarjeta(tarjeta)"
+                class="btn-eliminar-tarjeta"
+                style="
+                  position: relative;
+                  top: 18px;
+                  background: rgba(250, 250, 250, 0);
+                  color: #ffffff;
+                  border: none;
+                  width: 40px;
+                  height: 40px;
+                  display: flex;
+                  align-items: right;
+                  justify-content: right;
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                  z-index: 10;
+                  color: #ffffff;
+                "
+                title="Eliminar Tarjeta"
+              >
+                <i
+                  class="fa-solid fa-trash"
+                  style="font-size: 0.9rem"
+                  style="width: 40px; height: 40px"
+                ></i>
+              </button>
+            </div>
+
+            <div class="tarjeta-chip"></div>
+
+            <div *ngIf="!verDatos" class="tarjeta-numero">
+              **** **** **** **** {{ tarjeta.NumTarjeta?.slice(-4) }}
+            </div>
+            <div *ngIf="verDatos" class="tarjeta-numero">
+              {{ tarjeta.NumTarjeta?.slice(0, 4) }} {{ tarjeta.NumTarjeta?.slice(4, 8) }}
+              {{ tarjeta.NumTarjeta?.slice(8, 12) }} {{ tarjeta.NumTarjeta?.slice(12, 16) }}
+              {{ tarjeta.NumTarjeta?.slice(16, 20) }}
+            </div>
+
+            <div class="tarjeta-footer">
+              <div>
+                <small>Rango</small>
+                <strong>{{ tarjeta.rango?.nombre || 'Estándar' }}</strong>
+              </div>
+
+              <div>
+                <small>Vence</small>
+                <strong>
+                  {{ tarjeta.fechaVencimiento | date: 'MM/yy' }}
+                </strong>
+              </div>
+            </div>
+
+            <div class="tarjeta-status">
+              <span
+                class="estado-badge"
+                [ngClass]="{
+                  'estado-ok': tarjeta.status === 1,
+                  'estado-error': tarjeta.status !== 1,
+                }"
+              >
+                {{ tarjeta.status === 1 ? 'Activa' : 'Bloqueada' }}
+              </span>
+            </div>
+          </div>
         </div>
+
+        <ng-template #sinTarjetas>
+          <div class="atm-screen atm-screen--center">
+            <div style="font-size: 3rem; color: #94a3b8; margin-bottom: 15px">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <h3>No tienes tarjetas registradas</h3>
+
+            <p style="color: #64748b">Agrega una tarjeta para comenzar a operar.</p>
+          </div>
+        </ng-template>
+        <button type="button" class="btn-volver" (click)="volver()">
+          <i class="fa-solid fa-power-off"></i> CERRAR SESIÓN
+        </button>
       </div>
 
-      <button class="btn-confirmar" [disabled]="!montoValido" (click)="confirmarRetiro()">
-        CONFIRMAR RETIRO <span class="btn-icon"><i class="fa-solid fa-arrow-right"></i></span>
-      </button>
+      <div *ngIf="tabActiva === 'agregar-tarjeta'" class="atm-screen">
+        <h2 class="screen-title">
+          <i class="fa-solid fa-circle-plus"></i>
+          Agregar Tarjeta
+        </h2>
 
-      <button type="button" class="btn-volver" (click)="volver()">
-        <i class="fa-solid fa-power-off"></i> CERRAR SESIÓN
-      </button>
-    </main>
+        <form [formGroup]="tarjetaForm" (ngSubmit)="guardarTarjeta()">
+          <div class="row">
+            <div class="form-group">
+              <label>Banco *</label>
+              <select name="idBanco" formControlName="idBanco" selected required>
+                <option selected disabled value="">Seleccione un Banco</option>
+                <option *ngFor="let banco of bancos" [value]="banco.idBanco">
+                  {{ banco.nombre }}
+                </option>
+              </select>
+              <span
+                class="error"
+                *ngIf="
+                  tarjetaForm.get('idBanco')?.touched &&
+                  tarjetaForm.get('idBanco')?.errors?.['required']
+                "
+              >
+                Debe seleccionar un banco.
+              </span>
+            </div>
 
-    <main class="atm-screen atm-screen--center" *ngIf="estado === 'procesando'">
-      <div class="spinner">
-        <div class="spinner-ring"></div>
-        <div class="spinner-ring spinner-ring--2"></div>
+            <div class="form-group">
+              <label>Rango de Tarjeta *</label>
+              <select name="idRango" formControlName="idRango" required>
+                <option selected disabled value="">Seleccione un Rango</option>
+                <option *ngFor="let rango of rangos" [value]="rango.idRango">
+                  {{ rango.nombre }}
+                </option>
+              </select>
+              <span
+                class="error"
+                *ngIf="
+                  tarjetaForm.get('idRango')?.touched &&
+                  tarjetaForm.get('idRango')?.errors?.['required']
+                "
+              >
+                Debe seleccionar un rango.
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label>Asignar PIN de Tarjeta (4 dígitos) *</label>
+              <input
+                type="password"
+                name="pin"
+                formControlName="pin"
+                maxlength="4"
+                placeholder="••••"
+                pattern="[0-9]{4}"
+                required
+              />
+              <span
+                class="error"
+                *ngIf="
+                  tarjetaForm.get('pin')?.touched && tarjetaForm.get('pin')?.errors?.['required']
+                "
+              >
+                El PIN es obligatorio.
+              </span>
+              <span
+                class="error"
+                *ngIf="
+                  tarjetaForm.get('pin')?.touched && tarjetaForm.get('pin')?.errors?.['pattern']
+                "
+              >
+                El PIN debe ser exactamente de 4 números.
+              </span>
+            </div>
+
+            <div class="form-group"></div>
+          </div>
+
+          <div class="row response-actions">
+            <button type="submit" [disabled]="tarjetaForm.invalid" class="btn-submit">
+              <i class="fa-solid fa-save"></i> Guardar Tarjeta
+            </button>
+          </div>
+        </form>
+        <button type="button" class="btn-volver" (click)="volver()">
+          <i class="fa-solid fa-power-off"></i> CERRAR SESIÓN
+        </button>
       </div>
-      <p class="procesando-text"><i class="fa-solid fa-vault fa-spin"></i> PROCESANDO TRANSACCIÓN…</p>
-      <p class="procesando-sub">Por favor no retire su tarjeta.</p>
-    </main>
 
-    <main class="atm-screen" *ngIf="estado === 'exito'">
-      <div class="resultado-header">
-        <span class="resultado-icon resultado-icon--ok"><i class="fa-solid fa-circle-check"></i></span>
-        <h3 class="resultado-titulo">RETIRO EXITOSO</h3>
-      </div>
+      <main class="atm-screen atm-screen--center" *ngIf="estado === 'error'">
+        <span class="resultado-icon resultado-icon--error"
+          ><i class="fa-solid fa-circle-xmark"></i
+        ></span>
+        <h3 class="resultado-titulo resultado-titulo--error">
+          {{ errorCarga ? 'ERROR AL LEER TARJETA' : 'TRANSACCIÓN RECHAZADA' }}
+        </h3>
+        <p class="error-mensaje">{{ errorCarga || mensajeError }}</p>
+        <button class="btn-nuevo btn-nuevo--error" (click)="reiniciar()">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          {{ errorCarga ? 'REINTENTAR' : 'INTENTAR DE NUEVO' }}
+        </button>
+      </main>
 
-      <div class="comprobante" *ngIf="resultados.length > 0">
-        <div class="comprobante-row">
-          <span class="comp-label"><i class="fa-solid fa-hashtag"></i> FOLIO</span>
-          <span class="comp-value">{{ resultados[0].folio }}</span>
-        </div>
-        <div class="comprobante-row">
-          <span class="comp-label"><i class="fa-solid fa-user"></i> TITULAR</span>
-          <span class="comp-value">{{ resultados[0].usuario }}</span>
-        </div>
-        <div class="comprobante-row">
-          <span class="comp-label"><i class="fa-solid fa-address-card"></i> CUENTA</span>
-          <span class="comp-value">{{ resultados[0].NumCuenta }}</span>
-        </div>
-        <div class="comprobante-row">
-          <span class="comp-label"><i class="fa-solid fa-credit-card"></i> TARJETA USADA</span>
-          <span class="comp-value">**** {{ resultados[0].NumTarjeta | slice: -4 }}</span>
-        </div>
-        <div class="comprobante-row">
-          <span class="comp-label"><i class="fa-solid fa-circle-info"></i> ESTATUS</span>
-          <span class="comp-value comp-status">{{ resultados[0].Status }}</span>
-        </div>
-      </div>
-
-      <div class="denominaciones" *ngIf="resultados.length > 0">
-        <p class="denominaciones-titulo"><i class="fa-solid fa-receipt"></i> DESGLOSE DE EFECTIVO</p>
-        <table class="denominaciones-tabla">
-          <thead>
-            <tr>
-              <th><i class="fa-solid fa-coins"></i> Tipo</th>
-              <th>Denominación</th>
-              <th>Cantidad</th>
-              <th>Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let r of resultados">
-              <td>
-                <i [class]="r.tipo === 'Billete' ? 'fa-solid fa-money-bill' : 'fa-solid fa-circle-dot'"></i> 
-                {{ r.tipo }}
-              </td>
-              <td>${{ r.denominacion }}</td>
-              <td>{{ r.cantidad }}</td>
-              <td>{{ r.subtotal | currency: 'MXN' : 'symbol' : '1.2-2' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <button class="btn-nuevo" (click)="reiniciar()">
-        <i class="fa-solid fa-rotate-left"></i> NUEVA OPERACIÓN
-      </button>
-    </main>
-  </ng-container>
-
-  <main class="atm-screen atm-screen--center" *ngIf="estado === 'error'">
-    <span class="resultado-icon resultado-icon--error"><i class="fa-solid fa-circle-xmark"></i></span>
-    <h3 class="resultado-titulo resultado-titulo--error">
-      {{ errorCarga ? 'ERROR AL LEER TARJETA' : 'TRANSACCIÓN RECHAZADA' }}
-    </h3>
-    <p class="error-mensaje">{{ errorCarga || mensajeError }}</p>
-    <button class="btn-nuevo btn-nuevo--error" (click)="reiniciar()">
-      <i class="fa-solid fa-arrows-rotate"></i> {{ errorCarga ? 'REINTENTAR' : 'INTENTAR DE NUEVO' }}
-    </button>
-  </main>
-
-  <footer class="atm-footer">
-    <span><i class="fa-solid fa-clock"></i> Servicio disponible 24 / 7</span>
-    <span class="footer-sep">|</span>
-    <span>Cajero #{{ idCajero }}</span>
-  </footer>
+      <footer class="atm-footer">
+        <span><i class="fa-solid fa-clock"></i> Servicio disponible 24 / 7</span>
+        <span class="footer-sep">|</span>
+        <span>Cajero #{{ idCajero }}</span>
+      </footer>
+    </div>
+  </div>
 </div>
