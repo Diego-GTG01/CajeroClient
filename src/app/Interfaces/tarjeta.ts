@@ -9,7 +9,4 @@ export interface Tarjeta {
     pin?: string;
     fechaVencimiento?: Date;
     status?: number;
-    
-    
-
 }
