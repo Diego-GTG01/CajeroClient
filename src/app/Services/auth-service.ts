@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  url = 'http://localhost:8080/';
+  url = 'http://192.167.0.168:8080/';
   private http = inject(HttpClient);
 
   auth(userAuth: { [key: string]: string }): Observable<any> {
