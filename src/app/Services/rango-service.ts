@@ -8,7 +8,7 @@ import { Result } from '../Interfaces/result';
   providedIn: 'root',
 })
 export class RangoService {
-  url = 'http://localhost:8080/rango';
+  url = 'http://192.167.0.168:8080/rango';
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Result<Rango[]>> {
