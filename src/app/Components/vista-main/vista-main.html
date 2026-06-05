@@ -1,36 +1,21 @@
 <div class="app-background">
   <div class="app-container">
     <div class="atm-shell">
-      <!-- HEADER -->
       <div class="atm-header">
         <div class="atm-logo">
           <div class="atm-logo-circle">
-            <i class="fa-solid fa-vault"></i>
+            <i class="fa-solid fa-vault atm-logo-icon"></i>
           </div>
-
           <div class="atm-brand">
             <h1>Sistema de Cajeros</h1>
             <span>Monitoreo y Gestión ATM</span>
           </div>
         </div>
-
         <div class="atm-status">
           <span class="atm-status-dot"></span>
           Sistema Operativo
         </div>
       </div>
-
-      <!-- LOADING -->
-
-      <div *ngIf="cargando" class="atm-screen atm-screen--center">
-        <div class="spinner">
-          <i class="fa-solid fa-circle-notch fa-spin"></i>
-        </div>
-        <div class="procesando-text">Cargando cajeros...</div>
-        <div class="procesando-sub">Espere un momento</div>
-      </div>
-
-      <!-- ERROR -->
 
       <div *ngIf="error" class="atm-screen">
         <div class="error-mensaje">
@@ -39,35 +24,35 @@
         </div>
       </div>
 
-      <!-- DASHBOARD -->
-
       <div *ngIf="!cargando" class="dashboard-resumen">
         <div class="resumen-card">
           <span>Total Cajeros</span>
           <strong>{{ cajeros.length }}</strong>
         </div>
-
         <div class="resumen-card">
           <span>Efectivo Disponible</span>
           <strong>${{ totalSistema | number }}</strong>
         </div>
       </div>
 
-      <!-- ACCIONES -->
-
       <div class="acciones-bar">
         <button class="btn-confirmar" (click)="agregarCajero()">
           <i class="fa-solid fa-building-columns"></i>
           Agregar Cajero
         </button>
-
         <button class="btn-confirmar btn-secundario" (click)="agregarUsuario()">
           <i class="fa-solid fa-user-plus"></i>
           Agregar Usuario
         </button>
       </div>
 
-      <!-- LISTADO -->
+      <div *ngIf="cargando" class="atm-screen atm-screen--center">
+        <div class="spinner">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </div>
+        <div class="procesando-text">Cargando cajeros...</div>
+        <div class="procesando-sub">Espere un momento</div>
+      </div>
 
       <div *ngIf="!cargando && cajeros.length > 0" class="atm-grid">
         <div
@@ -84,10 +69,8 @@
             <div [class]="obtenerClaseEstado(cajero.total || 0)">
               <i class="fa-solid fa-money-bill-wave"></i>
             </div>
-
             <div>
               <h2 class="resultado-titulo">Cajero #{{ cajero.idCajero }}</h2>
-
               <span
                 class="estado-badge"
                 [ngClass]="{
@@ -107,18 +90,15 @@
                 <i class="fa-solid fa-location-dot"></i>
                 Ubicación
               </span>
-
               <span class="comp-value">
                 {{ cajero.ubicacion || 'Sin ubicación' }}
               </span>
             </div>
-
             <div class="comprobante-row">
               <span class="comp-label">
                 <i class="fa-solid fa-money-bill-wave"></i>
                 Disponible
               </span>
-
               <span class="comp-value efectivo"> ${{ cajero.total | number }} </span>
             </div>
           </div>
@@ -130,26 +110,19 @@
         </div>
       </div>
 
-      <!-- VACIO -->
-
       <div *ngIf="!cargando && cajeros.length === 0" class="atm-screen atm-screen--center">
-        <div style="font-size: 2rem; margin-bottom: 10px; color: #7f8c8d">
+        <div class="spinner" style="color: #7f8c8d">
           <i class="fa-solid fa-box-open"></i>
         </div>
-
         <h2 class="screen-title">No hay cajeros disponibles</h2>
       </div>
-
-      <!-- FOOTER -->
 
       <div class="atm-footer">
         <span>
           <i class="fa-solid fa-microchip"></i>
           ATM SYSTEM
         </span>
-
         <span>•</span>
-
         <span>Monitor de Cajeros</span>
       </div>
     </div>

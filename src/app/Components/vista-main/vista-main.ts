@@ -56,6 +56,13 @@ export class VistaMain implements OnInit {
         text: 'Este cajero se encuentra sin fondos en este momento. Por favor, selecciona otro.',
         confirmButtonColor: '#d33',
         confirmButtonText: 'Entendido',
+        customClass: {
+          popup: 'swal-responsive-popup',
+          title: 'swal-responsive-title',
+          actions: 'swal-responsive-actions',
+          confirmButton: 'swal-responsive-btn',
+          cancelButton: 'swal-responsive-btn',
+        },
       });
       return;
     }
@@ -71,6 +78,13 @@ export class VistaMain implements OnInit {
         confirmButtonText: 'Sí, continuar',
         cancelButtonText: 'Cancelar',
         reverseButtons: true,
+        customClass: {
+          popup: 'swal-responsive-popup',
+          title: 'swal-responsive-title',
+          actions: 'swal-responsive-actions',
+          confirmButton: 'swal-responsive-btn',
+          cancelButton: 'swal-responsive-btn',
+        },
       }).then((result) => {
         if (result.isConfirmed) {
           this.redirigirAClase(cajero);
@@ -119,6 +133,13 @@ export class VistaMain implements OnInit {
       confirmButtonColor: ' #22c55e',
       cancelButtonColor: '#d33',
       reverseButtons: true,
+      customClass: {
+        popup: 'swal-responsive-popup',
+        title: 'swal-responsive-title',
+        actions: 'swal-responsive-actions',
+        confirmButton: 'swal-responsive-btn',
+        cancelButton: 'swal-responsive-btn',
+      },
       preConfirm: () => {
         const ubicacion = (document.getElementById('ubicacion') as HTMLInputElement).value;
 
@@ -168,6 +189,13 @@ export class VistaMain implements OnInit {
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
       reverseButtons: true,
+      customClass: {
+        popup: 'swal-responsive-popup',
+        title: 'swal-responsive-title',
+        actions: 'swal-responsive-actions',
+        confirmButton: 'swal-responsive-btn',
+        cancelButton: 'swal-responsive-btn',
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         this.cajeroService.deleteCajero(id).subscribe({

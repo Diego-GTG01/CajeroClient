@@ -14,14 +14,39 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.atm-shell {
-  padding: 20px;
-  background: #fff;
+.app-background {
+  width: 100%;
   min-height: 100vh;
+  padding: 30px;
+  background: #b2dafa;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  border-radius: 24px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.atm-shell {
+  padding: 24px;
+  background: #fff;
+  height: 100%;
+  width: 100%;
   color: rgb(0, 0, 0);
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* ── HEADER ── */
 .atm-header {
   background: linear-gradient(135deg, #1a3a5c, #244a73);
   color: white;
@@ -31,7 +56,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-
+  gap: 15px;
   box-shadow:
     0 8px 20px rgba(26, 58, 92, 0.2),
     inset 0 1px rgba(255, 255, 255, 0.08);
@@ -42,25 +67,28 @@ body {
   align-items: center;
   gap: 15px;
 }
+
 .atm-logo-circle {
   width: 55px;
   height: 55px;
   border-radius: 14px;
-
   background: rgba(255, 255, 255, 0.12);
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   backdrop-filter: blur(5px);
+  flex-shrink: 0; /* Evita que se deforme en pantallas chicas */
+}
+
+.atm-logo-icon {
+  font-size: 24px;
 }
 
 .atm-brand h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 .atm-brand span {
@@ -72,14 +100,12 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-
   padding: 8px 14px;
   border-radius: 999px;
-
   background: rgba(255, 255, 255, 0.12);
-
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap; /* Evita saltos de línea raros */
 }
 
 .atm-status-dot {
@@ -87,557 +113,23 @@ body {
   height: 10px;
   border-radius: 50%;
   background: #22c55e;
-
   box-shadow: 0 0 10px #22c55e;
 }
 
-.atm-logo-icon {
-  font-size: 24px;
-}
-
-.atm-session {
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.atm-session-dot {
-  width: 10px;
-  height: 10px;
-  background: #4cd964;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.cliente-card {
-  background: white;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
-.cliente-card.rango-oro {
-  background: linear-gradient(135deg, #fff8e7, #ffe6b3);
-  border-left: 4px solid #ffd700;
-}
-
-.cliente-card.rango-platino {
-  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-  border-left: 4px solid #b0b0b0;
-}
-
-.cliente-card.rango-black {
-  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-  color: white;
-}
-
-.cliente-card-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.cliente-label {
-  font-size: 11px;
-  color: #666;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
-}
-
-.cliente-nombre {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-.cliente-rango-badge {
-  background: #e0e5ec;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.cliente-saldo-valor {
-  font-size: 22px;
-  font-weight: bold;
-  color: #2ecc71;
-}
-
-.atm-screen {
-  background: white;
-  margin: 0 20px 20px 20px;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.atm-screen--center {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.screen-title {
-  font-size: 20px;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #1a3a5c;
-  color: #1a3a5c;
-}
-
-.context-row {
-  background: #f0f2f5;
-  padding: 12px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.context-item {
-  display: flex;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.context-label {
-  color: #666;
-  font-weight: bold;
-}
-
-.context-value {
-  font-family: monospace;
-  font-weight: bold;
-}
-
-.monto-group {
-  margin-bottom: 25px;
-}
-
-.monto-label {
-  display: block;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.monto-input-wrap {
-  display: flex;
-  align-items: center;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  padding: 10px 15px;
-  background: white;
-}
-
-.monto-input-wrap.invalid {
-  border-color: #e74c3c;
-  background: #fff5f5;
-}
-
-.monto-currency {
-  font-size: 24px;
-  font-weight: bold;
-  margin-right: 5px;
-}
-
-.monto-input {
-  flex: 1;
-  font-size: 24px;
-  border: none;
-  outline: none;
-  padding: 5px;
-  font-family: monospace;
-}
-
-.monto-currency-code {
-  font-size: 12px;
-  color: #666;
-}
-
-.monto-hint {
-  font-size: 12px;
-  color: #e74c3c;
-  margin-top: 5px;
-  padding-left: 10px;
-}
-
-.montos-rapidos {
-  margin-bottom: 25px;
-}
-
-.montos-rapidos-label {
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #666;
-}
-
-.montos-rapidos-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.btn-rapido {
-  background: #f0f2f5;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-.btn-rapido:hover:not(:disabled) {
-  background: #e0e5ec;
-}
-
-.btn-rapido.active {
-  background: #1a3a5c;
-  color: white;
-}
-
-.btn-rapido:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.btn-confirmar {
-  width: 100%;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed); /* Degradado moderno */
-  color: #ffffff;
-  border: none;
-  padding: 14px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
-}
-
-.btn-confirmar:hover:not(:disabled) {
-  filter: brightness(1.1); /* Brilla un poco más al pasar el mouse */
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.4);
-}
-
-.btn-confirmar:active:not(:disabled) {
-  transform: translateY(1px);
-}
-
-.btn-confirmar:disabled {
-  background: #e0e5ec; /* Pierde el gradiente al estar deshabilitado */
-  color: #a0aab5;
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid #f0f2f5;
-  border-top-color: #1a3a5c;
-  border-radius: 50%;
-  animation: girar 0.8s linear infinite;
-  margin: 0 auto 20px;
-}
-
-@keyframes girar {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.procesando-text {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.procesando-sub {
-  font-size: 12px;
-  color: #666;
-}
-
-.resultado-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.resultado-icon {
-  width: 50px;
-  height: 50px;
-  background: #2ecc71;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  color: white;
-  font-weight: bold;
-}
-
-.resultado-icon--error {
-  background: #e74c3c;
-}
-
-.resultado-icon--warning {
-  background: #f39c12;
-}
-
-.resultado-titulo {
-  font-size: 20px;
-  color: #1a3a5c;
-}
-
-.comprobante {
-  background: #f8f9fa;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-.comprobante-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #e0e5ec;
-}
-
-.comprobante-row:last-child {
-  border-bottom: none;
-}
-
-.comp-label {
-  font-size: 12px;
-  color: #666;
-}
-
-.comp-value {
-  font-weight: bold;
-}
-
-.comp-status {
-  color: #2ecc71;
-}
-
-.denominaciones {
-  overflow-x: auto;
-  margin-bottom: 20px;
-}
-
-.denominaciones-titulo {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.denominaciones-tabla {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.denominaciones-tabla th,
-.denominaciones-tabla td {
-  text-align: left;
-  padding: 8px;
-  border-bottom: 1px solid #e0e5ec;
-}
-
-.denominaciones-tabla th {
-  background: #f0f2f5;
-}
-
-.btn-nuevo {
-  width: 100%;
-  background: #0065fd;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-.btn-nuevo:hover {
-  background: #e0e5ec;
-}
-
-.btn-eliminar {
-  width: 100%;
-  background: #e0e5ec;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-.btn-eliminar:hover {
-  background: #d33;
-  color: #fffcfc;
-}
-
-.error-mensaje {
-  background: #fee;
-  padding: 12px;
-  border-radius: 8px;
-  margin: 15px 0;
-  color: #e74c3c;
-}
-
-.atm-footer {
-  background: #e0e5ec;
-  padding: 12px;
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* ── Responsivo ─────────────────────────────────────────────────────────── */
-@media (max-width: 500px) {
-  body {
-    padding: 10px;
-  }
-
-  .cliente-card-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .context-row {
-    flex-direction: column;
-  }
-
-  .context-divider {
-    display: none;
-  }
-
-  .montos-rapidos-grid {
-    justify-content: center;
-  }
-
-  .resultado-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .screen-title {
-    font-size: 18px;
-  }
-
-  .monto-input {
-    font-size: 20px;
-  }
-
-  .monto-currency {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 380px) {
-  .atm-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .btn-rapido {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-
-  .denominaciones-tabla {
-    font-size: 12px;
-  }
-}
-
-.atm-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.atm-card {
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.atm-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* DISPONIBILIDAD */
-
-.atm-disponible {
-  border: 3px solid #2ecc71;
-}
-
-.atm-poco {
-  border: 3px solid #f39c12;
-}
-
-.atm-vacio {
-  border: 3px solid #e74c3c;
-}
-
-/* Hover */
-
-.atm-card {
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.atm-card:hover {
-  transform: translateY(-5px) scale(1.01);
-}
-
-/* Glow */
-
-.atm-disponible:hover {
-  box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
-}
-
-.atm-poco:hover {
-  box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
-}
-
-.atm-vacio:hover {
-  box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
-}
-
-/* RESUMEN */
-
+/* ── DASHBOARD RESUMEN ── */
 .dashboard-resumen {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
-  margin: 20px;
+  margin-bottom: 20px;
 }
 
 .resumen-card {
-  background: #fff;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 15px;
   padding: 18px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.02);
 }
 
 .resumen-card span {
@@ -649,34 +141,87 @@ body {
 .resumen-card strong {
   display: block;
   margin-top: 6px;
-  font-size: 24px;
+  font-size: 26px;
   color: #1a3a5c;
 }
 
-/* ACCIONES */
-
+/* ── BARRA DE ACCIONES ── */
 .acciones-bar {
   display: flex;
   gap: 12px;
-  margin: 0 20px 20px;
+  margin-bottom: 25px;
 }
 
 .acciones-bar .btn-confirmar {
   flex: 1;
 }
 
-.btn-secundario {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+/* ── CUADRÍCULA DE CAJEROS ── */
+.atm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
 }
 
-/* ESTADOS */
+.atm-screen {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #edf2f7;
+}
+
+.atm-screen--center {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.atm-card {
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.atm-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* ESTADOS DE DISPONIBILIDAD */
+.atm-disponible {
+  border: 3px solid #2ecc71;
+}
+.atm-poco {
+  border: 3px solid #f39c12;
+}
+.atm-vacio {
+  border: 3px solid #e74c3c;
+}
+
+.atm-disponible:hover {
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.25);
+}
+.atm-poco:hover {
+  box-shadow: 0 0 20px rgba(243, 156, 18, 0.25);
+}
+.atm-vacio:hover {
+  box-shadow: 0 0 20px rgba(231, 76, 60, 0.25);
+}
+
+/* DETALLES DEL CAJERO */
+.resultado-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
 
 .estado-badge {
   display: inline-block;
-  margin-top: 8px;
-  padding: 5px 12px;
+  margin-top: 6px;
+  padding: 4px 12px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 }
 
@@ -684,60 +229,260 @@ body {
   background: rgba(46, 204, 113, 0.15);
   color: #16a34a;
 }
-
 .estado-warning {
   background: rgba(243, 156, 18, 0.15);
   color: #d97706;
 }
-
 .estado-error {
   background: rgba(231, 76, 60, 0.15);
   color: #dc2626;
 }
 
-/* EFECTIVO */
+.resultado-titulo {
+  font-size: 18px;
+  color: #1a3a5c;
+  margin: 0;
+}
+
+.comprobante {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.comprobante-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e5ec;
+  gap: 10px;
+}
+
+.comprobante-row:last-child {
+  border-bottom: none;
+}
+
+.comp-label {
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comp-value {
+  font-weight: bold;
+  text-align: right;
+  word-break: break-word; /* Protege ubicaciones muy largas */
+}
 
 .efectivo {
-  font-size: 18px;
+  font-size: 16px;
   color: #16a34a;
 }
 
-/* TARJETAS */
-
-.atm-card {
-  transition: all 0.25s ease;
+/* ── BOTONES ── */
+.btn-confirmar {
+  width: 100%;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
-.atm-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+.btn-confirmar:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(124, 58, 237, 0.3);
 }
 
-/* RESPONSIVE */
+.btn-secundario {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
 
-@media (max-width: 768px) {
-  .acciones-bar {
-    flex-direction: column;
+.btn-eliminar {
+  width: 100%;
+  background: #f1f5f9;
+  color: #64748b;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-eliminar:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+/* ── LOADING & ERRORS ── */
+.spinner {
+  width: 40px;
+  height: 40px;
+  font-size: 32px;
+  color: #1a3a5c;
+  margin: 0 auto 15px;
+}
+
+.error-mensaje {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  color: #b91c1c;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.screen-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #1a3a5c;
+}
+
+/* ── FOOTER ── */
+.atm-footer {
+  margin-top: 15px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 15px;
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── BREAKPOINTS RESPONSIVOS (MEDIA QUERIES) ── */
+
+@media (max-width: 1024px) {
+  .app-background {
+    padding: 15px;
   }
 }
 
-.app-background {
-  min-height: 100vh;
-  padding: 30px;
-  background: #b2dafa;
+@media (max-width: 768px) {
+  .acciones-bar {
+    flex-direction: column; /* Apila los botones de agregar en tabletas y móviles */
+    gap: 10px;
+  }
+
+  .atm-shell {
+    padding: 16px;
+  }
 }
 
-.app-container {
-  max-width: 1400px;
-  margin: 0 auto;
+@media (max-width: 540px) {
+  .atm-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
 
-  background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+  .atm-logo {
+    flex-direction: column;
+    gap: 8px;
+  }
 
-  border-radius: 24px;
+  .atm-brand h1 {
+    font-size: 20px;
+  }
 
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.8),
-    0 1px 2px rgba(0, 0, 0, 0.05);
+  .atm-status {
+    width: 100%;
+    justify-content: center;
+  }
 
-  overflow: hidden;
+  .dashboard-resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .atm-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .swal-responsive-popup {
+    width: 90% !important;
+    max-width: 450px !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+  }
+
+  .swal-responsive-title {
+    font-size: 20px !important;
+    color: #1a3a5c !important;
+  }
+
+  @media (max-width: 480px) {
+    .swal-responsive-popup {
+      padding: 16px !important;
+    }
+
+    .swal-responsive-title {
+      font-size: 18px !important;
+    }
+
+    .swal-responsive-actions {
+      flex-direction: column !important;
+      gap: 10px !important;
+      width: 100% !important;
+    }
+
+    .swal-responsive-btn {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 12px !important;
+      font-size: 14px !important;
+    }
+  }
+}
+/* Estilos responsivos para el campo de entrada de SweetAlert2 */
+.swal2-input {
+  width: 100% !important; /* Fuerza a que ocupe todo el ancho disponible del contenedor */
+  max-width: 100% !important;
+  margin: 15px 0 !important; /* Controla el margen superior e inferior uniformemente */
+  box-sizing: border-box !important; /* Asegura que el padding no desborde el input */
+  font-size: 16px !important; /* Evita el zoom automático molesto en iOS (iPhone) al dar foco */
+  height: 46px !important; /* Altura cómoda para clics táctiles */
+  border-radius: 8px !important; /* Bordes suaves alineados a tu diseño */
+  border: 2px solid #ddd !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+/* Efecto Focus para mantener la identidad visual del sistema */
+.swal2-input:focus {
+  border-color: #4f46e5 !important; /* Morado/Índigo como tus botones principales */
+  box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.2) !important;
+}
+
+/* Ajustes específicos para pantallas móviles muy pequeñas */
+@media (max-width: 480px) {
+  .swal2-input {
+    font-size: 14px !important; 
+    height: 42px !important; 
+    padding: 8px 12px !important;
+  }
 }
