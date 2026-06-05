@@ -1,84 +1,135 @@
-<div class="container">
-  <h2>Registro de Nuevo Usuario y Asignación de Cuenta</h2>
-  <hr>
+<div class="app-background">
+  <div class="app-container">
+    <div class="container">
+      <h2>Registro de Nuevo Usuario y Asignación de Cuenta</h2>
+      <hr />
 
-  <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="form-grid">
-    
-    <h3>Datos Personales</h3>
-    <div class="row">
-      <div class="form-group">
-        <label>Nombre *</label>
-        <input type="text" formControlName="nombre">
-        <span class="error" *ngIf="usuarioForm.get('nombre')?.touched && usuarioForm.get('nombre')?.errors?.['required']">Este campo es requerido.</span>
-      </div>
+      <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="form-grid">
+        <h3>Datos Personales</h3>
+        <div class="row">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" formControlName="nombre" />
+            <span
+              class="error"
+              *ngIf="
+                usuarioForm.get('nombre')?.touched &&
+                usuarioForm.get('nombre')?.errors?.['required']
+              "
+              >Este campo es requerido.</span
+            >
+          </div>
 
-      <div class="form-group">
-        <label>Apellido Paterno *</label>
-        <input type="text" formControlName="apellidoPaterno">
-        <span class="error" *ngIf="usuarioForm.get('apellidoPaterno')?.touched && usuarioForm.get('apellidoPaterno')?.errors?.['required']">Este campo es requerido.</span>
-      </div>
+          <div class="form-group">
+            <label>Apellido Paterno *</label>
+            <input type="text" formControlName="apellidoPaterno" />
+            <span
+              class="error"
+              *ngIf="
+                usuarioForm.get('apellidoPaterno')?.touched &&
+                usuarioForm.get('apellidoPaterno')?.errors?.['required']
+              "
+              >Este campo es requerido.</span
+            >
+          </div>
 
-      <div class="form-group">
-        <label>Apellido Materno</label>
-        <input type="text" formControlName="apellidoMaterno">
-      </div>
+          <div class="form-group">
+            <label>Apellido Materno</label>
+            <input type="text" formControlName="apellidoMaterno" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label>Celular *</label>
+            <input type="text" formControlName="celular" placeholder="Ej: 5512345678" />
+            <span
+              class="error"
+              *ngIf="usuarioForm.get('celular')?.touched && usuarioForm.get('celular')?.invalid"
+              >Ingresa un celular válido.</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Teléfono Fijo</label>
+            <input type="text" formControlName="telefono" />
+          </div>
+
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" formControlName="email" />
+            <span
+              class="error"
+              *ngIf="usuarioForm.get('email')?.touched && usuarioForm.get('email')?.invalid"
+              >Email inválido o muy largo.</span
+            >
+          </div>
+        </div>
+
+        <h3>Configuración de Cuenta y Tarjeta</h3>
+        <hr />
+        <div class="row">
+          <div class="form-group">
+            <label>Banco Asignado *</label>
+            <select formControlName="idBanco">
+              <option value="">Seleccione un Banco</option>
+              <option *ngFor="let banco of bancos" [value]="banco.idBanco">
+                {{ banco.nombre }}
+              </option>
+            </select>
+            <span
+              class="error"
+              *ngIf="usuarioForm.get('idBanco')?.touched && usuarioForm.get('idBanco')?.invalid"
+              >Debe seleccionar un banco.</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Rango de Tarjeta *</label>
+            <select formControlName="idRango">
+              <option value="">Seleccione un Rango</option>
+              <option *ngFor="let rango of rangos" [value]="rango.idRango">
+                {{ rango.nombre }} ({{ rango.minRetiro }} - {{ rango.maxRetiro }})
+              </option>
+            </select>
+            <span
+              class="error"
+              *ngIf="usuarioForm.get('idRango')?.touched && usuarioForm.get('idRango')?.invalid"
+              >Debe seleccionar un rango.</span
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label>Saldo Inicial ($) *</label>
+            <input type="number" formControlName="saldoInicial" />
+            <span
+              class="error"
+              *ngIf="
+                usuarioForm.get('saldoInicial')?.touched && usuarioForm.get('saldoInicial')?.invalid
+              "
+              >El saldo mínimo es 0.</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Asignar PIN de Tarjeta (4 dígitos) *</label>
+            <input type="password" formControlName="pin" maxlength="4" />
+            <span
+              class="error"
+              *ngIf="usuarioForm.get('pin')?.touched && usuarioForm.get('pin')?.invalid"
+              >El PIN debe ser exactamente de 4 números.</span
+            >
+          </div>
+        </div>
+
+        <button type="button" class="btn-volver" (click)="volver()">
+          <i class="fa-solid fa-arrow-left"></i> Volver
+        </button>
+
+        <button type="submit" class="btn-submit">Registrar Usuario y Cuenta</button>
+      </form>
     </div>
-
-    <div class="row">
-      <div class="form-group">
-        <label>Celular *</label>
-        <input type="text" formControlName="celular" placeholder="Ej: 5512345678">
-        <span class="error" *ngIf="usuarioForm.get('celular')?.touched && usuarioForm.get('celular')?.invalid">Ingresa un celular válido.</span>
-      </div>
-
-      <div class="form-group">
-        <label>Teléfono Fijo</label>
-        <input type="text" formControlName="telefono">
-      </div>
-
-      <div class="form-group">
-        <label>Email *</label>
-        <input type="email" formControlName="email">
-        <span class="error" *ngIf="usuarioForm.get('email')?.touched && usuarioForm.get('email')?.invalid">Email inválido o muy largo.</span>
-      </div>
-    </div>
-
-    <h3>Configuración de Cuenta y Tarjeta</h3>
-    <hr>
-    <div class="row">
-      <div class="form-group">
-        <label>Banco Asignado *</label>
-        <select formControlName="idBanco">
-          <option value="">Seleccione un Banco</option>
-          <option *ngFor="let banco of bancos" [value]="banco.idBanco">{{banco.nombre}}</option>
-        </select>
-        <span class="error" *ngIf="usuarioForm.get('idBanco')?.touched && usuarioForm.get('idBanco')?.invalid">Debe seleccionar un banco.</span>
-      </div>
-
-      <div class="form-group">
-        <label>Rango de Tarjeta *</label>
-        <select formControlName="idRango">
-          <option value="">Seleccione un Rango</option>
-          <option *ngFor="let rango of rangos" [value]="rango.idRango">{{rango.nombre}} ({{rango.minRetiro}} - {{rango.maxRetiro}})</option>
-        </select>
-        <span class="error" *ngIf="usuarioForm.get('idRango')?.touched && usuarioForm.get('idRango')?.invalid">Debe seleccionar un rango.</span>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group">
-        <label>Saldo Inicial ($) *</label>
-        <input type="number" formControlName="saldoInicial">
-        <span class="error" *ngIf="usuarioForm.get('saldoInicial')?.touched && usuarioForm.get('saldoInicial')?.invalid">El saldo mínimo es 0.</span>
-      </div>
-
-      <div class="form-group">
-        <label>Asignar PIN de Tarjeta (4 dígitos) *</label>
-        <input type="password" formControlName="pin" maxlength="4">
-        <span class="error" *ngIf="usuarioForm.get('pin')?.touched && usuarioForm.get('pin')?.invalid">El PIN debe ser exactamente de 4 números.</span>
-      </div>
-    </div>
-
-    <button type="submit" class="btn-submit">Registrar Usuario y Cuenta</button>
-  </form>
+  </div>
 </div>

@@ -12,6 +12,7 @@ import { CreateClienteRequest } from '../../Interfaces/create-cliente-request';
 import { BancoService } from '../../Services/banco-service';
 import { RangoService } from '../../Services/rango-service';
 import { UsuarioService } from '../../Services/usuario-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vista-usuario',
@@ -64,7 +65,8 @@ export class VistaUsuario implements OnInit {
     private bancoService: BancoService,
     private rangoService: RangoService,
     private usuarioService: UsuarioService,
-    private fb: FormBuilder
+    private router: Router,
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
@@ -102,9 +104,7 @@ export class VistaUsuario implements OnInit {
 
     const idBancoSeleccionado = Number(this.usuarioForm.value.idBanco);
 
-    this.cuenta.banco = this.bancos.find(
-      (b) => b.idBanco === idBancoSeleccionado
-    );
+    this.cuenta.banco = this.bancos.find((b) => b.idBanco === idBancoSeleccionado);
   }
 
   crearTarjeta(): void {
@@ -113,13 +113,9 @@ export class VistaUsuario implements OnInit {
     const idRangoSeleccionado = Number(this.usuarioForm.value.idRango);
     const idBancoSeleccionado = Number(this.usuarioForm.value.idBanco);
 
-    this.tarjeta.rango = this.rangos.find(
-      (r) => r.idRango === idRangoSeleccionado
-    )!;
+    this.tarjeta.rango = this.rangos.find((r) => r.idRango === idRangoSeleccionado)!;
 
-    this.tarjeta.banco = this.bancos.find(
-      (b) => b.idBanco === idBancoSeleccionado
-    )!;
+    this.tarjeta.banco = this.bancos.find((b) => b.idBanco === idBancoSeleccionado)!;
   }
 
   onSubmit(): void {
@@ -130,6 +126,13 @@ export class VistaUsuario implements OnInit {
         icon: 'warning',
         title: 'Formulario inválido',
         text: 'Por favor corrige los errores antes de continuar.',
+        customClass: {
+          popup: 'swal-responsive-popup',
+          title: 'swal-responsive-title',
+          actions: 'swal-responsive-actions',
+          confirmButton: 'swal-responsive-btn',
+          cancelButton: 'swal-responsive-btn',
+        },
       });
 
       return;
@@ -149,6 +152,13 @@ export class VistaUsuario implements OnInit {
       title: 'Creando cliente...',
       text: 'Espere un momento',
       allowOutsideClick: false,
+      customClass: {
+        popup: 'swal-responsive-popup',
+        title: 'swal-responsive-title',
+        actions: 'swal-responsive-actions',
+        confirmButton: 'swal-responsive-btn',
+        cancelButton: 'swal-responsive-btn',
+      },
       didOpen: () => {
         Swal.showLoading();
       },
@@ -248,6 +258,13 @@ export class VistaUsuario implements OnInit {
             icon: 'error',
             title: 'Error',
             text: result.message || 'No fue posible crear el cliente.',
+            customClass: {
+              popup: 'swal-responsive-popup',
+              title: 'swal-responsive-title',
+              actions: 'swal-responsive-actions',
+              confirmButton: 'swal-responsive-btn',
+              cancelButton: 'swal-responsive-btn',
+            },
           });
         }
       },
@@ -261,6 +278,13 @@ export class VistaUsuario implements OnInit {
           icon: 'error',
           title: 'Error de conexión',
           text: 'No fue posible conectar con el servidor. Intente nuevamente más tarde.',
+          customClass: {
+            popup: 'swal-responsive-popup',
+            title: 'swal-responsive-title',
+            actions: 'swal-responsive-actions',
+            confirmButton: 'swal-responsive-btn',
+            cancelButton: 'swal-responsive-btn',
+          },
         });
       },
     });
@@ -278,6 +302,13 @@ export class VistaUsuario implements OnInit {
           icon: 'error',
           title: 'Error',
           text: 'No fue posible cargar los rangos.',
+          customClass: {
+        popup: 'swal-responsive-popup',
+        title: 'swal-responsive-title',
+        actions: 'swal-responsive-actions',
+        confirmButton: 'swal-responsive-btn',
+        cancelButton: 'swal-responsive-btn',
+      },
         });
       },
     });
@@ -295,8 +326,19 @@ export class VistaUsuario implements OnInit {
           icon: 'error',
           title: 'Error',
           text: 'No fue posible cargar los bancos.',
+          customClass: {
+            popup: 'swal-responsive-popup',
+            title: 'swal-responsive-title',
+            actions: 'swal-responsive-actions',
+            confirmButton: 'swal-responsive-btn',
+            cancelButton: 'swal-responsive-btn',
+          },
         });
       },
     });
+  }
+
+  volver(): void {
+    this.router.navigate(['/']);
   }
 }
