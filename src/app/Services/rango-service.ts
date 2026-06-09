@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rango } from '../Interfaces/rango';
 import { Result } from '../Interfaces/result';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class RangoService {
-  url = 'http://192.167.0.168:8080/rango';
+  url = environment.apiUrl + '/rango';
+
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Result<Rango[]>> {

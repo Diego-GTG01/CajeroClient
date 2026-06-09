@@ -3,23 +3,23 @@ import { inject, Injectable } from '@angular/core';
 import { Cajero } from '../Interfaces/cajero';
 import { Result } from '../Interfaces/result';
 import { Observable } from 'rxjs';
-
+import { environment } from '../../environments/environment'; 
 @Injectable({
   providedIn: 'root',
 })
 export class CajeroService {
-  url = 'http://192.167.0.168:8080/';
+  url = environment.apiUrl + '/cajero';
   private http = inject(HttpClient);
 
   getAllCajeros(): Observable<Result<Cajero[]>> {
-    return this.http.get<Result<Cajero[]>>(this.url + 'cajero/getAll');
+    return this.http.get<Result<Cajero[]>>(this.url + '/getAll');
   }
 
   addCajero(cajero: Cajero): Observable<Result<Cajero>> {
-    return this.http.post<Result<Cajero>>(this.url + 'cajero/add', cajero);
+    return this.http.post<Result<Cajero>>(this.url + '/add', cajero);
   }
 
   deleteCajero(idCajero: number): Observable<Result<any>> {
-    return this.http.delete<Result<any>>(this.url + 'cajero/delete/' + idCajero);
+    return this.http.delete<Result<any>>(this.url + '/delete/' + idCajero);
   }
 }

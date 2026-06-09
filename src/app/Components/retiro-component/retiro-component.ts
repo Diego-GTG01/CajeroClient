@@ -118,7 +118,6 @@ export class RetiroComponent implements OnInit {
       next: (result) => {
         if (result.correct) {
           this.tarjetas = result.objects.flat() as Tarjeta[];
-          console.log('Tarjetas cargadas:', this.tarjetas);
         }
       },
       error: (err) => {
@@ -297,6 +296,7 @@ export class RetiroComponent implements OnInit {
       cajero: { idCajero: this.idCajero, total: 0 },
       monto: this.monto!,
     };
+    console.log(transaccion)
 
     this.estado = 'procesando';
 
@@ -320,6 +320,7 @@ export class RetiroComponent implements OnInit {
       next: (result) => {
         if (result.correct) {
           this.resultados = result.objects as Retiro[];
+          console.log(result.objects);
           this.estado = 'exito';
 
           Swal.fire({
@@ -416,7 +417,9 @@ export class RetiroComponent implements OnInit {
     });
 
     this.tarjetaService.addTarjeta(this.tarjetaCreada!, this.tokenGuardado).subscribe({
+      
       next: (result) => {
+        console.log('Respuesta del servidor:', this.tarjetaCreada);
         if (result.correct) {
           const tarjetaRetornada =
             result.object || (result.objects ? result.objects[0] : null) || this.tarjetaCreada;

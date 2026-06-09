@@ -4,12 +4,13 @@ import { Observable, map } from 'rxjs';
 import { Result } from '../Interfaces/result';
 import { SaldoInfo } from '../Interfaces/saldo-info';
 import { DatosCliente } from '../Components/retiro-component/retiro-component';
+import { environment } from '../../environments/environment'; 
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
-  private url = 'http://192.167.0.168:8080/usuario';
+  private url = environment.apiUrl + '/usuario';
   private http = inject(HttpClient);
 
   getDatosClientePorTarjeta(numTarjeta: string, token: string): Observable<DatosCliente> {

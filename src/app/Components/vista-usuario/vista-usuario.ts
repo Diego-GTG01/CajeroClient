@@ -147,6 +147,7 @@ export class VistaUsuario implements OnInit {
       cuenta: this.cuenta,
       tarjeta: this.tarjeta,
     };
+    console.log('Solicitud a enviar:', this.request);
 
     Swal.fire({
       title: 'Creando cliente...',
@@ -169,7 +170,6 @@ export class VistaUsuario implements OnInit {
         Swal.close();
 
         console.log('Respuesta del servidor:', result);
-
         if (result.correct) {
           const usuario = result.object.usuario;
           const cuenta = result.object.cuenta;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   templateUrl: './vista-login.html',
   styleUrl: './vista-login.css',
 })
-export class VistaLogin {
+export class VistaLogin implements OnInit {
   numTarjeta: string = '';
   pin: string = '';
 
@@ -29,7 +29,14 @@ export class VistaLogin {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.cajero = navigation.extras.state['cajeroSeleccionado'];
-      console.log('Cajero recibido en Login:', this.cajero);
+      if (this.cajero === null || this.cajero === undefined) {
+        this.volver();
+      }
+    }
+  }
+  ngOnInit(): void {
+    if (this.cajero === null || this.cajero === undefined) {
+      this.router.navigate(['/']);
     }
   }
 
@@ -63,6 +70,7 @@ export class VistaLogin {
       });
       return;
     }
+
     Swal.fire({
       title: 'Verificando credenciales',
       text: 'Por favor espere...',

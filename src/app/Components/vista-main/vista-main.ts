@@ -31,7 +31,6 @@ export class VistaMain implements OnInit {
 
     this.cajeroService.getAllCajeros().subscribe({
       next: (result) => {
-        console.log('Cajeros cargados:', result);
         this.cajeros = result.objects.flat() || [];
         this.cargando = false;
       },
@@ -46,7 +45,6 @@ export class VistaMain implements OnInit {
   cajeroSeleccionado?: Cajero;
 
   seleccionarCajero(cajero: Cajero): void {
-    console.log('Cajero seleccionado:', cajero);
     const monto = cajero.total;
 
     if (monto <= 0) {
@@ -157,7 +155,6 @@ export class VistaMain implements OnInit {
           total: 0,
           estado: 'Activo',
         };
-        console.log(nuevoCajero);
 
         this.cajeroService.addCajero(nuevoCajero).subscribe({
           next: () => {

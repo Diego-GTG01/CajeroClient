@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { Result } from '../Interfaces/result';
 import { Banco } from '../Interfaces/banco';
 import Swal from 'sweetalert2';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class BancoService {
-  url = 'http://192.167.0.168:8080/banco';
+  url = environment.apiUrl + '/banco';
 
   constructor(private http: HttpClient) {}
 

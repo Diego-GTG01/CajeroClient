@@ -4,12 +4,13 @@ import { Transaccion } from '../Interfaces/transaccion';
 import { Observable } from 'rxjs';
 import { Result } from '../Interfaces/result';
 import { Retiro } from '../Interfaces/retiro';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RetiroService {
-  url = 'http://192.167.0.168:8080/';
+  url = environment.apiUrl;
   private http = inject(HttpClient);
 
   transact(transaccion: Transaccion, token: string): Observable<Result<Retiro>> {
@@ -17,6 +18,6 @@ export class RetiroService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.post<Result<Retiro>>(this.url + 'Cajero/transact', transaccion, {headers});
+    return this.http.post<Result<Retiro>>(this.url + '/Cajero/transact', transaccion, { headers });
   }
 }
